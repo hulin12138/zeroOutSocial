@@ -1,0 +1,243 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="socnet.StatusUpdate"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+
+	<title>我的首页
+	<%
+		System.out.println(session.getAttribute("name"));
+
+%>
+</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if IE 7]>
+			<link rel="stylesheet" href="css/ie7.css" type="text/css">
+		<![endif]-->
+		<script>
+<!--
+function checkLength(textarea)
+{
+	if (textarea.value.length > 140)
+		{	
+			alert("输入的新鲜事太长啦");
+			textarea.focus();
+			return false;
+		}
+			if (textarea.value.length == 0)
+		{	
+			alert("没输入新鲜事呢");
+			textarea.focus();
+			return false;
+		}
+}
+function clickText(textarea)
+{	
+	textarea.value = "";
+	textarea.focus();
+}
+-->
+</script>
+<title>我的首页</title>
+
+</head>
+<body>
+
+<%
+	String name = (String)session.getAttribute("loginname");
+	%>
+<form name="form1" action="UpdateNewsServlet" method="post">
+<div class="page">
+		<div class="header">
+			<div>
+				<a href="login.html" id="logo"><img src="images/logo.gif" alt="logo"></a>
+				<ul>
+					<li class="selected">
+						<a href="usermain.html">首页</a>
+					</li>
+					<li>
+						<a href="homepage.html">个人主页</a>
+					</li>
+					<li>
+						<a href="follow.html">关注</a>
+					</li>
+					<li>
+						<a href="fans.html">粉丝</a>
+					</li>
+					<li>
+						<a href="update.html">个人资料</a>
+					</li>
+					<li>
+						<a href="changePwd.html">我的帐号</a>
+					</li>
+					<li>
+						<a href="random.html">随便看看</a>
+					</li>
+					<li>
+						<a href="logout.html">登出</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="body">
+			<form name="form1" action="UpdateNewsServlet" method="post">	
+			<div>
+				<div>
+				<ul class="blog">							
+						<table width="80%" border="0">
+						 <tr>
+							<td>
+								<textarea name="my_news" id="my_news" rows="10" cols="60" onClick="return clickText(this)"></textarea>
+							</td>
+							<td>
+								<p><a href="follow.html">关注</a></p>
+								<p><a href="fans.html">粉丝</a></p>
+							</td>
+						 </tr>
+						 <tr>
+							<td align="center"><input name="release" type="submit" value="发布" onClick="return checkLength(my_news)">&nbsp; 
+							<input name="clear" type="reset" value="清空" onClick="return clickText(my_news)"></td>
+						</tr>
+						</table>
+					</ul>
+					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />
+					<%
+						pR = pR.getPersonRepository();
+						socnet.Person person = pR.getPersonByName(name);
+						java.util.Iterator<socnet.StatusUpdate> it = person.getAllStatuses();
+					%>
+					
+					<ul><p>好友们的新鲜事</p>
+					<%	
+						if (it == null)
+						{
+							out.println("Oh, No Status!");
+						}
+						else
+						{							
+							while (it.hasNext())
+							{
+								socnet.StatusUpdate su = it.next();
+								String fname = su.getPerson().getName();
+								String isoName = new String(fname.getBytes("utf-8"),"ISO8859-1");
+								//String fname = new String(su.getPerson().getName().getBytes("ISO8859-1"), "utf-8");
+								String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
+								System.out.println(ahref);
+								out.println("<p>"+ahref+" 说： "+
+										su.getStatusText()+"   "+su.getStatusDate()+"</p>");
+							}
+						}
+					%>
+						
+					</ul>
+				<ul class="paging">
+						<li>
+							<a href="#">&lt;&lt;</a>
+						</li>
+						<li>
+							<a href="#">First</a>
+						</li>
+						<li>
+							<a href="#">1</a>
+						</li>
+						<li>
+							<a href="#">2</a>
+						</li>
+						<li>
+							<a href="#">3</a>
+						</li>
+						<li>
+							<a href="#">4</a>
+						</li>
+
+						<li>
+							<a href="#">5</a>
+						</li>
+						<li>
+							<a href="#">6</a>
+						</li>
+						<li>
+							<a href="#">7</a>
+						</li>
+						<li>
+							<a href="#">8</a>
+						</li>
+						<li>
+							<a href="#">9</a>
+						</li>
+						<li>
+							<a href="#">10</a>
+						</li>
+						<li>
+							<a href="#">11</a>
+						</li>
+						<li>
+							<a href="#">12</a>
+						</li>
+						<li>
+							<a href="#">13</a>
+						</li>
+						<li>
+							<a href="#">14</a>
+						</li>
+						<li>
+							<a href="#">15</a>
+						</li>
+						<li>
+							<a href="#">16</a>
+						</li>
+						<li>
+							<a href="#">17</a>
+						</li>
+						<li>
+							<a href="#">18</a>
+						</li>
+						<li>
+							<a href="#">19</a>
+						</li>
+						<li>
+							<a href="#">20</a>
+						</li>
+						<li>
+							<a href="#">21</a>
+						</li>
+						<li>
+							<a href="#">Last</a>
+						</li>
+						<li>
+							<a href="#">&gt;&gt;</a>
+						</li>
+					</ul>					
+				</div>
+			</div>
+		</form>
+		</div>		
+		<div class="footer">
+			<div>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+				
+				<div class="connect">
+					<a href="#" id="vimeo">weibo</a>
+					<a href="#" id="facebook">facebook</a>
+					<a href="#" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">&#169; Copyright &#169; 2012. LinkGraph Group. All rights reserved</p>
+				<p class="footnote"> SNS Website Using Neo4j Database, Large Graph Data Management Project, Peking University</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

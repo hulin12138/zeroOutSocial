@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>LinkGraph登录</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if IE 7]>
+			<link rel="stylesheet" href="css/ie7.css" type="text/css">
+		<![endif]-->
+
+<script language="javascript">
+function check(form){
+	if (form.username.value==""){
+		alert("请输入用户名称!");form.name.focus();return false;
+	}
+	if (form.password.value==""){
+		alert("请输入密码!");form.pwd.focus();return false;
+	}
+}
+function check1(){
+	if (1){
+		alert("请输入用户名称!");return false;
+	}
+	if (0){
+		alert("请输入密码!");return false;
+	}
+}
+</script>
+</head>
+<body>
+
+	<div class="page">
+		<div class="header">
+			<div>
+				<a href="login.html" id="logo"><img src="images/logo.gif" alt="logo"></a>
+				<ul>
+					<li class="selected">
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="body">
+			<div>
+				<div id="featured">
+					<h3>LinkGraph 连接你和我</h3>
+					<form name="loginForm" action="{% url 'zeroOut:login' %}" method="post">
+						<table width="100%" border="0" cellpadding="0" cellspacing="0"
+							bordercolorlight="#FFFFFF" bordercolordark="#D2E3E6">
+							<tr>
+								<td height="57">&nbsp;</td>
+								<td height="57" colspan="2" align="left">&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+							<td width="10%">&nbsp;</td>
+							</tr>
+						
+							<tr>
+								<td width="10%" height="40%"><p>用户名：&nbsp;&nbsp;
+									<input name="name" type="text" id="username" size="28" height="20%"></p></td>
+								<td width="9%">&nbsp;</td>
+							</tr>
+							<tr>
+								<td width="10%" height="40%">&nbsp;</td>
+							</tr>
+							<tr>
+								<td><p>&nbsp;&nbsp;密码：&nbsp;&nbsp;&nbsp;&nbsp; 
+									<input name="pwd" type="password" id="password" size="29" height="20%"></p>
+								</td>
+								<td width="9%">&nbsp;</td>
+							</tr>
+						
+						</table>
+								<a><input name="resetBtn" type="reset" value="重置" size="25" height="25">&nbsp;&nbsp;
+									<input  align="right" name="submitBtn" type="submit" value="登录" onClick="return check(loginForm)" size="25"> &nbsp; 
+								</a>
+					</form>
+			  </div>
+			</div>
+			<div>
+				<ul class="blog">
+					<li>
+						<a href="about.html"><img src="images/crown.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+					<li>
+						<a href="about.html"><img src="images/cake.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+					<li>
+						<a href="about.html"><img src="images/mask.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer">
+			<div>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+				<p>This website template has been collect from Free Website Templates for you, for free. You can replace all
+					this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud 
+					exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure 
+					dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+					eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+					nulla facilisi. Nam</p>
+				<div class="connect">
+					<a href="#" id="vimeo">weibo</a>
+					<a href="#" id="facebook">facebook</a>
+					<a href="#" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">&#169; Copyright &#169; 2012. LinkGraph Group. All rights reserved</p>
+				<p class="footnote"> SNS Website Using Neo4j Database, Large Graph Data Management Project, Peking University</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

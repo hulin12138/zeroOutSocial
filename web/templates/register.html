@@ -1,0 +1,305 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>LinkGraph注册</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if IE 7]>
+			<link rel="stylesheet" href="css/ie7.css" type="text/css">
+		<![endif]-->
+<script>
+<!--
+	function check_info(form)
+	{
+		if(form.a_name.value=="")
+			{
+				alert("请填写您的用户名!");
+				form.a_name.focus();
+				return false;
+			}
+		if(form.a_name.value.length<1 || form.a_name.value.length>20)
+		{
+			alert("用户名的长度必须在1-20之间！");
+			form.a_name.focus();
+			return false;
+		}
+		if(form.a_pass.value=="")
+		{
+			alert("请填写您的密码!");
+			form.a_pass.focus();
+			return false;
+		}
+		if(form.a_pass.value.length<3 || form.a_pass.value.length>20)
+		{
+			alert("密码的长度必须在3-20之间！");
+			form.a_pass.focus();
+			return false;
+		}
+		if(form.a_pass2.value=="")
+		{
+			alert("请确认您的密码");
+			form.a_pass2.focus();
+			return false;
+		}
+		if(form.a_pass2.value != form.a_pass.value)
+		{
+			alert("两次密码不一致，请重新填写");
+			form.a_pass2.focus();
+			return false;
+		}
+		
+ 		var patrn=/^[0-9]{4}(-)((0[1-9])|(1[0-2]))(-)(([0-2][1-9])|(3[0-1]))$/; 
+ 		if(form.birthday.value!="" && !patrn.exec(form.birthday.value))
+ 		{
+  			alert("日期格式有误，请填写正确的出生日期");
+  			form.birthday.focus();
+  			return false;
+ 		}		
+		if(form.a_email.value.indexOf("@")==-1 ||(form.a_email.value.indexOf(".")==-1))
+		{
+			alert("错误的邮箱格式，请填写正确的电子邮箱");
+			form.a_email.focus();
+			return false;
+		}
+		if (form.a_email.value == "")
+		{
+			alert("请输入邮箱地址");
+			form.a_email.focus();
+			return false;
+		}
+		if (form.a_email.value == "")
+		{
+			alert("请输入邮箱地址");
+			form.a_email.focus();
+			return false;
+		}
+	}
+-->
+</script>
+</head>
+<body>
+	<div class="page">
+		<div class="header">
+			<div>
+				<a href="login.html" id="logo"><img src="images/logo.gif" alt="logo"></a>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li >
+						<li class="selected">
+						<a href="register.html">注册</a>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="body">
+			<div>
+				<div>
+				<form action="RegisterServlet" method="post" onSubmit="return check_info(this);">
+					<ul class="blog">							
+								<center>
+								<table width="100%" border="0" bordercolor="#99CCFF" cellpadding="0"
+									cellspacing="0" style="border-collapse: collapse">
+									<!--DWLayoutTable-->
+									<tr>
+										<td height="30" colspan="2" align="center"><h4>用户注册</h4></td>
+									</tr>
+
+									<%
+									try {
+										String errorcode = (String)session.getAttribute("errorcode");
+										if (errorcode != null)
+										{
+											if (errorcode.equals("RegisterNameExist")) {
+									%>
+									<tr>
+										<td colspan="2" align="center" height="40"><font color="red">用户名已存在！</font>
+										</td>
+									</tr>
+									<%
+											}
+											session.setAttribute("errorcode", null);
+										}
+									}
+									catch (Exception e) 
+									{
+										System.err.println(e.getMessage());
+									}
+									%>
+								
+									<tr>
+										<td width="24%" height="30" align="right">用户名：<font color="red">*</font></td>
+										<td width="76%" height="30" align="left">&nbsp;&nbsp;
+										<input type="text" name="a_name" size="28"/>&nbsp;（数字或者是字符[<font color="red">1-20</font>]）
+									</tr>
+									<tr>
+										<td width="24%" height="30" align="right">密码：<font color="red">*</font></td>
+										<td width="76%" height="30" align="left">&nbsp;&nbsp;&nbsp;
+										<input type="password" name="a_pass" size="28"/> （数字或者是字符[<font color="red">3-20</font>]）
+									</tr>
+									<tr>
+										<td height="30" align="right">确认密码：<font color="red">*</font></td>
+										<td height="30" align="left">&nbsp;&nbsp;&nbsp;
+										<input type="password" name="a_pass2" size="28"/> </td>
+									</tr>
+									<tr>
+										<td height="30" align="right">性别：&nbsp;</td>
+										<td height="30" align="left">&nbsp;&nbsp;&nbsp; 
+										<input type="radio" name="sex" value="男" />男
+										<input type="radio" name="sex" value="女" />女
+										</td>
+									</tr>
+									<tr>
+										<td height="30" align="right">邮箱：<font color="red">*</font></td>
+										<td height="30" align="left">&nbsp;&nbsp;
+										<input type="text" name="a_email" size="28"/> （someone@example.com）</td>
+									</tr>
+									<tr>
+										<td width="24%" height="30" align="right">出生日期：&nbsp;</td>
+										<td width="76%" height="30" align="left">&nbsp;&nbsp;&nbsp;<input
+											type="text" name="birthday" size="28"/> （出生年月日&nbsp;[<font color="red">YYYY-MM-DD</font>]）
+									</tr>
+								
+									<tr>
+										<td height="30" align="right">选择头像：&nbsp;</td>
+										<td height="30" align="left">&nbsp;&nbsp;&nbsp; 
+										<select name=reg_userPic size=1
+											onChange="document.images['avatar'].src=options[selectedIndex].value;">
+											<option value="images/face/Image1.gif">Image1
+											<option value="images/face/Image2.gif">Image2
+											<option value="images/face/Image3.gif">Image3
+											<option value="images/face/Image4.gif">Image4
+											<option value="images/face/Image5.gif">Image5
+											<option value="images/face/Image6.gif">Image6
+											<option value="images/face/Image7.gif">Image7
+											<option value="images/face/Image8.gif">Image8
+											<option value="images/face/Image9.gif">Image9
+											<option value="images/face/Image10.gif">Image10
+											<option value="images/face/Image11.gif">Image11
+											<option value="images/face/Image12.gif">Image12
+											<option value="images/face/Image13.gif">Image13
+											<option value="images/face/Image14.gif">Image14
+											<option value="images/face/Image15.gif">Image15
+											<option value="images/face/Image16.gif">Image16
+											<option value="images/face/Image17.gif">Image17
+											<option value="images/face/Image18.gif">Image18
+											<option value="images/face/Image19.gif">Image19
+											<option value="images/face/Image20.gif">Image20
+											<option value="images/face/Image21.gif">Image21
+											<option value="images/face/Image22.gif">Image22
+											<option value="images/face/Image23.gif">Image23
+											<option value="images/face/Image24.gif">Image24
+											<option value="images/face/Image25.gif">Image25
+											<option value="images/face/Image26.gif">Image26
+											<option value="images/face/Image27.gif">Image27
+											<option value="images/face/Image28.gif">Image28
+											<option value="images/face/Image29.gif">Image29
+											<option value="images/face/Image30.gif">Image30
+											<option value="images/face/Image31.gif">Image31
+											<option value="images/face/Image32.gif">Image32
+											<option value="images/face/Image33.gif">Image33
+											<option value="images/face/Image34.gif">Image34
+											<option value="images/face/Image35.gif">Image35
+											<option value="images/face/Image36.gif">Image36
+											<option value="images/face/Image37.gif">Image37
+											<option value="images/face/Image38.gif">Image38
+											<option value="images/face/Image39.gif">Image39
+											<option value="images/face/Image40.gif">Image40
+											<option value="images/face/Image41.gif">Image41
+											<option value="images/face/Image42.gif">Image42
+											<option value="images/face/Image43.gif">Image43
+											<option value="images/face/Image44.gif">Image44
+											<option value="images/face/Image45.gif">Image45
+											<option value="images/face/Image46.gif">Image46
+											<option value="images/face/Image47.gif">Image47
+											<option value="images/face/Image48.gif">Image48
+											<option value="images/face/Image49.gif">Image49
+											<option value="images/face/Image50.gif">Image50
+											<option value="images/face/Image51.gif">Image51
+											<option value="images/face/Image52.gif">Image52
+											<option value="images/face/Image53.gif">Image53
+											<option value="images/face/Image54.gif">Image54
+											<option value="images/face/Image55.gif">Image55
+											<option value="images/face/Image56.gif">Image56
+											<option value="images/face/Image57.gif">Image57
+											<option value="images/face/Image58.gif">Image58
+											<option value="images/face/Image59.gif">Image59
+											<option value="images/face/Image60.gif">Image60
+										</select> &nbsp;&nbsp;<img id=avatar src="images/face/Image1.gif" alt=个人头像
+											width="32" height="32"></td>
+									</tr>
+
+									<tr>
+										<td height="35" colspan="2" align="center">
+										<input type="submit" value=" 提交 " /> &nbsp;
+										<input type="button" onClick="history.go(-1);" value=" 返回 " /></td>
+									</tr>
+								</table>
+								</center>
+					</ul>
+					</form>					
+				</div>
+			</div>
+<div>
+				<ul class="blog">
+					<li>
+						<a href="about.html"><img src="images/crown.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+					<li>
+						<a href="about.html"><img src="images/cake.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+					<li>
+						<a href="about.html"><img src="images/mask.png" alt=""></a>
+						<h3>LinkGraph是基于neo4j图形数据库的社会化网络</h3>
+						<p>This website template has been collect from Free Website Templates for you, for free. You can 
+							replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, 
+							sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="footer">
+			<div>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+				<p>This website template has been collect from Free Website Templates for you, for free. You can replace all
+					this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
+					euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud 
+					exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure 
+					dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero 
+					eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait
+					nulla facilisi. Nam</p>
+				<div class="connect">
+					<a href="#" id="vimeo">weibo</a>
+					<a href="#" id="facebook">facebook</a>
+					<a href="#" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">&#169; Copyright &#169; 2012. LinkGraph Group. All rights reserved</p>
+				<p class="footnote"> SNS Website Using Neo4j Database, Large Graph Data Management Project, Peking University</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

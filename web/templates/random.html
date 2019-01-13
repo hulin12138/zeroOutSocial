@@ -1,0 +1,156 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>随便看看</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if IE 7]>
+			<link rel="stylesheet" href="css/ie7.css" type="text/css">
+		<![endif]-->
+</head>
+<body>
+
+<div class="page">
+		<div class="header">
+			<div>
+				<a href="login.html" id="logo"><img src="images/logo.gif" alt="logo"></a>
+				<ul>
+					<li>
+						<a href="usermain.html">首页</a>
+					</li>
+					<li>
+						<a href="homepage.html">个人主页</a>
+					</li>
+					<li>
+						<a href="follow.html">关注</a>
+					</li>
+					<li >
+						<a href="fans.html">粉丝</a>
+					</li>
+					<li>
+						<a href="update.html">个人资料</a>
+					</li>
+					<li>
+						<a href="changePwd.html">我的帐号</a>
+					</li>
+					<li class="selected">
+						<a href="random.html">随便看看</a>
+					</li>
+					<li>
+						<a href="logout.html">登出</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="body">
+					<form name="addFriend" action="RandomServlet" method="post">
+					
+						
+				<table width="80%" align="center">
+				<tr>&nbsp;</tr>
+				<tr>&nbsp;</tr>
+				<tr>&nbsp;</tr>
+				<tr>&nbsp;</tr>
+				<tr>
+		<%
+		try {
+			String errorcode = (String)session.getAttribute("errorcode");
+			if (errorcode != null)
+			{
+				if (errorcode.equals("NameNotExist"))
+				{					
+		%>
+		<font color="red">用户名不存在！</font> 
+		<%
+				}
+				if (errorcode.equals("AddSuccess")) 
+				{
+		%>
+		<font color="red">已成功添加关注！</font> 
+		<%
+				}
+				session.setAttribute("errorcode", null);
+			}
+		}
+		catch (Exception e) 
+		{
+ 		System.err.println(e.getMessage());
+ 		}
+		%>
+				</tr>
+				<tr>
+						<input type="text" align="center" name="theFriend" size="28" height="20%"> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="submit" name="addFollow" value="加关注"/>
+				</tr>
+				</table>
+					</form>
+		
+					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />
+					<%
+						pR = pR.getPersonRepository();
+						java.util.Iterator<socnet.Person> all = pR.getAllPersons().iterator();
+					%>
+
+					<p></p>			
+					<p></p>			
+					<p></p>			
+					<p></p>			
+					<p></p>					
+					<ul><p>&nbsp;&nbsp;&nbsp;&nbsp;新鲜事：</p>
+					<%
+					int num = 0;
+					while (all.hasNext() && num < socnet.Person.SHOW_NUM)
+					{
+						socnet.Person person = all.next();
+						if (person.getName().equals((String)session.getAttribute("loginname")))
+							continue;
+						java.util.Iterator<socnet.StatusUpdate> it = person.getStatus().iterator();
+						if (!it.hasNext())
+							continue;
+						socnet.StatusUpdate su = it.next();
+						String fname = person.getName();
+						String ahref = "<a align=\"center\" href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
+						System.out.println(ahref);
+						out.println("<p>"+ahref+" 说： "+
+								su.getStatusText()+"   "+su.getStatusDate()+"</p>");
+						num ++;
+					}
+					%>
+					
+					<p>&nbsp;</p>			
+					<p>&nbsp;</p>			
+					<p>&nbsp;</p>			
+					<p>&nbsp;</p>			
+					<p>&nbsp;</p>			
+		
+		
+		</div>
+		<div class="footer">
+			<div>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+				
+				<div class="connect">
+					<a href="#" id="vimeo">weibo</a>
+					<a href="#" id="facebook">facebook</a>
+					<a href="#" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">&#169; Copyright &#169; 2012. LinkGraph Group. All rights reserved</p>
+				<p class="footnote"> SNS Website Using Neo4j Database, Large Graph Data Management Project, Peking University</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

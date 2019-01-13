@@ -1,0 +1,190 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8"
+    pageEncoding="UTF-8" import="org.neo4j.*"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>个人主页</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<!--[if IE 7]>
+			<link rel="stylesheet" href="css/ie7.css" type="text/css">
+		<![endif]-->
+		
+</head>
+<body>
+
+<div class="page">
+		<div class="header">
+			<div>
+				<a href="login.html" id="logo"><img src="images/logo.gif" alt="logo"></a>
+				<ul>
+					<li>
+						<a href="usermain.html">首页</a>
+					</li>
+					<li class="selected">
+						<a href="homepage.html">个人主页</a>
+					</li>
+					<li>
+						<a href="follow.html">关注</a>
+					</li>
+					<li >
+						<a href="fans.html">粉丝</a>
+					</li>
+					<li>
+						<a href="update.html">个人资料</a>
+					</li>
+					<li>
+						<a href="changePwd.html">我的帐号</a>
+					</li>
+					<li>
+						<a href="random.html">随便看看</a>
+					</li>
+					<li>
+						<a href="logout.html">登出</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="body">
+			<div>
+				<div>
+					<ul class="blog">	
+						<table width="100%" border="0">
+						
+					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />
+					<%
+						String name = (String)request.getParameter("hpName");
+						if (name == null)
+						{
+							name = (String)session.getAttribute("loginname");
+						}
+						else
+							name = new String(name.getBytes("ISO8859-1"), "utf-8");
+						
+						pR = pR.getPersonRepository();
+						socnet.Person person = pR.getPersonByName(name);
+						String sex = person.getGender();
+						String hometown = person.getHometown();
+						String birthday = person.getBirthday();
+						String food = person.getFavoriteFood();
+						String act = person.getFavoriteAct();
+						String movie = person.getFavoriteMovie();		
+						String pic = person.getAvatar();
+					%>
+							<tr>
+								<td>
+								<table width="100%" border="0">
+									<tr>
+										<td width="78%">
+										<table width="100%" border="0">
+											<tr>
+												<img src=<%=pic %>>
+											</tr>
+										</table>
+										<table width="100%" border="0">
+											<tr>
+												<td width="20%">姓名</td>
+												<td width="90%"><%=name%></td>
+											</tr>
+											<tr>
+												<td width="20%">性别</td>
+												<td><%=sex %></td>
+											</tr>
+											<tr>
+												<td width="20%">出生于</td>
+												<td><%=birthday %></td>
+											</tr>
+											<tr>
+												<td width="20%">家乡</td>
+												<td><%=hometown %></td>
+											</tr>
+											<tr>
+												<td width="20%">最喜欢的食物：</td>
+												<td><%=food %></td>
+											</tr>
+											<tr>
+												<td width="20%">最喜欢的活动：</td>
+												<td><%=act %></td>
+											</tr>
+											<tr>
+												<td width="20%">最喜欢的电影：</td>
+												<td><%=movie %></td>
+											</tr>											
+										</table>
+										</td>
+										
+										<td>
+												
+					<%
+						java.util.Iterator<socnet.Person> af = person.getFriends().iterator();
+					%>
+					<p>&nbsp;&nbsp;关注：</p>
+					<%
+					while (af.hasNext())
+					{
+						socnet.Person aPerson = af.next();
+						String fname = aPerson.getName();
+						
+						String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
+
+						out.println("<p>"+ahref+"</p>");
+					}
+					%>
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							<tr height="15">&nbsp;</tr>
+							
+							<tr>
+								<td>
+					<%	
+						java.util.Iterator<socnet.StatusUpdate> it = person.getStatus().iterator();
+						if (it == null)
+						{
+							out.println("Oh, No Status!");
+						}
+						else
+						{							
+							while (it.hasNext())
+							{
+								socnet.StatusUpdate su = it.next();
+								out.println("<p>"+su.getPerson().getName()+" 说： "+
+										su.getStatusText()+"   "+su.getStatusDate()+"</p>");
+							}
+						}
+					%>
+								</td>
+							</tr>
+						</table>
+	</div>
+			</div>
+		</div>
+		
+		<div class="footer">
+			<div>
+				<ul>
+					<li>
+						<a href="login.html">登录</a>
+					</li>
+					<li>
+						<a href="register.html">注册</a>
+					</li>
+					<li>
+						<a href="about.html">关于</a>
+					</li>
+				</ul>
+				
+				<div class="connect">
+					<a href="#" id="vimeo">weibo</a>
+					<a href="#" id="facebook">facebook</a>
+					<a href="#" id="twitter">twitter</a>
+				</div>
+				<p class="footnote">&#169; Copyright &#169; 2012. LinkGraph Group. All rights reserved</p>
+				<p class="footnote"> SNS Website Using Neo4j Database, Large Graph Data Management Project, Peking University</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from . import render_html
+from . import views
 
 app_name = 'zeroOut'
 urlpatterns = [
-    path('login', render_html.login, name='login'),
+    path('login', views.login, name='login'),
 ]

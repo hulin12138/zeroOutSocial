@@ -7,3 +7,7 @@ from django.shortcuts import render_to_response
 def login(request):
     response = render(request, 'login.html')
     return response
+
+def register(request):
+    response = render(request, 'register.html')
+    return response

@@ -4,8 +4,10 @@ from django.http import HttpResponseNotFound
 from django.urls import reverse
 from hashlib import sha256
 from datetime import datetime
-from model.followRelation import User as follow_user#TODO
-from model.userAccount import User as account_user
+from sys import path
+path.append(model)
+from followRelation import User as follow_user#TODO
+from userAccount import User as account_user
 
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "

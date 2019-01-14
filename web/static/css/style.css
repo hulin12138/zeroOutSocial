@@ -80,10 +80,10 @@ body{
 	padding-bottom: 2px;
 }
 .body div div#featured{
-	background:url(../images/flowerwheel.jpg) no-repeat center top !important;
-	height:507px;
+	background:url(../images/player.png) no-repeat center top !important;
+	height:506px;
 	padding: 0 10px !important;
-	margin:0 auto;
+	margin: auto;
 	width:940px;
 }
 .body div div#featured h3{
@@ -568,7 +568,7 @@ body{
 	line-height:25px;
 	padding:0 0 0 90px;
 }
-.footer div div.connect a#weibo{
+.footer div div.connect a#sina{
 	display:block;
 	background:url(../images/icons.gif) no-repeat;
 	line-height:25px;

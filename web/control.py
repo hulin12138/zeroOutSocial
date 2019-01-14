@@ -40,7 +40,7 @@ def login(request):
 
         request.session['uid'] = uid
         #return redirect(reverse('myapp:profile'))
-        return redirect(reverse('web:get_home'))#TODO
+        return redirect(reverse('zeroOut:get_home'))#TODO
         # response.set_cookie("user", "1749705962")
 
 
@@ -97,7 +97,7 @@ def get_home(request):
     follow_num = f_user.get_follow_num(uid)
     fan_num = f_user.get_fan_num(uid)
     context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
-    return render(request, 'zeroOut/profile.html', context)
+    return render(request, 'usermain.html', context)
 
 def edit_profile(request):
     uid = request.session['uid']

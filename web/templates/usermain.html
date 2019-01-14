@@ -66,7 +66,7 @@ function clickText(textarea)
 		</div>
 		
 		<div class="body">
-			<form name="form1" action="{% usr 'zeroOut:get_home' %}" method="post">	
+			<form name="form1" action="{% url 'zeroOut:get_home' %}" method="post">	
             {% csrf_token %}
 			<div>
 				<div>

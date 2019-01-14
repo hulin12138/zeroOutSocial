@@ -37,6 +37,7 @@ class userAccount:
         self.city = results[2]
         self.sex = results[3]
         self.creaDate = results[4]
+        template = prefix + ' select ?m where {{ ?x wb:{} ?m . ?x wb:user_uid "{}" .}}'
         query = template.format('user_password', self.uid)
         res = gstore.query('weibo', query)['results']['bindings']
         if len(res) > 0:

@@ -106,7 +106,7 @@ class User():
             user = User_Info(uid, name)
             users.append(user)
         context = {'follow_users': users}
-        return render(request, 'user/my_follow.html', context)#TODO
+        return render(request, 'follow.html', context)#TODO
 		
     def get_follow_user(self, request, uid):
         if "uid" not in request.session:

@@ -60,20 +60,24 @@ function change(input)
 				<tr>
 					<td>
 					<p>&nbsp;&nbsp;我的关注：</p>
-					{%if follower_users%}
+					{%if follow_users%}
 					<table id="block" style="margin-top:25px">
-					{%for follow in follower_users%}
-					<tr>
-						<th><a href="{%url 'my:app:get_user_home' follow.uid%}">{{follow}}</a></th>
+					{%for follow in follow_users%}
+					    <tr>
 						<th>{{ follow.name }}</th>
 							<form name="removeFollowForm<%=fname %>" action = "{%url 'zeroOut:delete_follow_user'}" method="post">
-								<p>
+							<p>
 								<input type="hidden" name="followuid" value={{follow.uid}}>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="submit" name=removeFollowUser" value="移除关注"/>
 							</p>
-						</form>
-					</tr>
+						    </form>
+					    </tr>
+                    {% endfor %}
+                    </table>
+                    {% else %}
+                    <p>No follows are available.</p>
+                    {% endif %}
 					</td>
 					</tr>
 					</table>

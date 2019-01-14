@@ -134,15 +134,17 @@ class Weibo():
         #print("Gookie got", request.session.get("user"))
         user_id = request.session.get("uid")
         weibo_text = request.POST["weibo_text"]
-        weibo_topic = request.POST["weibo_topic"]
+        weibo_topic = "F**k this project"
         weibo_uid = user_id
         weibo_mid = str(time.time())
         weibo_source = "UNK"
         weibo_date = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
         weibo_commentsnum, weibo_repostsnum, weibo_attitudesnum = "0", "0", "0"
         status, error_info = self.write_weibo(weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentsnum, weibo_attitudesnum, weibo_uid, weibo_topic)
+        context = {'user': request.POST['user'], 'weibo_num': str(int(request.POST['weibo_num'])+1), \
+        'follow_num': request.POST['follow_num'], 'fan_num': request.POST['fan_num'], 'weibos': request.POST['weibos']}
         if status:
-            return HttpResponse("success")
+            return render(request, 'usermain.html', context)
         else:
             return HttpResponse(error_info)
 

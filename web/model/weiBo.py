@@ -106,34 +106,8 @@ class Weibo():
             weibo_all.append(weibo_per)
         weibo_all = sorted(weibo_all, key=lambda v:v["weibo_date"], reverse=True)
         return weibo_all
-        
-        # the following is discard version
-        query_str = 'select ?x where {{ ?x <http://localhost:2020/vocab/weibo_uid> "{}" . }}'.format(weibo_uid)
-        res = self.gstore.query("weibo", query_str)
-        weibo_mids = [i["x"]["value"] for i in res["results"]["bindings"]]
-        weibo_all = []
-        for weibo_mid_per in weibo_mids:
-            weibo_per = dict()
-            query_str = 'select ?y ?z where {{ <{}> ?y ?z . }}'.format(weibo_mid_per)
-            res = self.gstore.query("weibo", query_str)
-            res = res["results"]["bindings"]
-            for res_per in res:
-                y = res_per["y"]["value"]
-                z = res_per["z"]["value"]
-                if y.startswith("http://localhost:2020/vocab"):
-                    y = y[28:]
-                    weibo_per[y] = z
-            weibo_all.append(weibo_per)
-        weibo_all = sorted(weibo_all, key=lambda v:v["weibo_date"], reverse=True)
-        return weibo_all
 
-    def send_weibo(self, request):
-        if "uid"  not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
-            return response
-        #print("Gookie got", request.session.get("user"))
-        user_id = request.session.get("uid")
-        weibo_text = request.POST["weibo_text"]
+    def send_weibo(self, user_id, weibo_text):
         weibo_topic = "F**k this project"
         weibo_uid = user_id
         weibo_mid = str(time.time())
@@ -141,12 +115,10 @@ class Weibo():
         weibo_date = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
         weibo_commentsnum, weibo_repostsnum, weibo_attitudesnum = "0", "0", "0"
         status, error_info = self.write_weibo(weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentsnum, weibo_attitudesnum, weibo_uid, weibo_topic)
-        context = {'user': request.POST['user'], 'weibo_num': str(int(request.POST['weibo_num'])+1), \
-        'follow_num': request.POST['follow_num'], 'fan_num': request.POST['fan_num'], 'weibos': request.POST['weibos']}
         if status:
-            return render(request, 'usermain.html', context)
+            return "success"
         else:
-            return HttpResponse(error_info)
+            return error_info
 
 
     def get_my_weibo(self, request):

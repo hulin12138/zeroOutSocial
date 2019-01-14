@@ -86,7 +86,7 @@ def profile(request):
     context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
     return render(request, 'web/profile.html', context)#TODO
 
-def get_home(request):
+def get_home(request):#go to page after login
     uid = request.session['uid']
     print(uid, request.session)
 
@@ -102,6 +102,19 @@ def get_home(request):
     weibos = weibo.get_user_follow_weibo(uid)
     context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
     return render(request, 'usermain.html', context)
+'''
+def get_user_home(request, uid):#goto person home page
+    user = account_user(uid)
+    user.load_from_db()
+
+    f_user = follow_user(gstore)
+    weibo_num = f_user.get_weibo_num(uid)
+    follow_num = f_user.get_follow_num(uid)
+    fan_num = f_user.get_fan_num(uid)
+
+    weibo = Weibo(gstore)
+    weibos = weibo.get_
+'''
 
 def edit_profile(request):
     uid = request.session['uid']
@@ -148,5 +161,28 @@ def update_profile(request):
     print(response)
     request.session['uid'] = uid
     return redirect(reverse('web:profile'))#TODO
+
+def send_weibo(request):
+    if "uid"  not in request.session:
+        response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+        return response
+    #print("Gookie got", request.session.get("user"))
+    user_id = request.session.get("uid")
+    weibo_text = request.POST["weibo_text"]
+    weibo = Weibo(gstore)
+    return_message = weibo.send_weibo(user_id, weibo_text)
+    if return_message == 'success':
+        user = account_user(user_id)
+        user.load_from_db()
+        f_user = follow_user(gstore)
+        weibo_num = f_user.get_weibo_num(user_id)
+        follow_num = f_user.get_follow_num(user_id)
+        fan_num = f_user.get_fan_num(user_id)
+
+        weibos = weibo.get_user_follow_weibo(user_id)
+        context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
+        return render(request, 'usermain.html', context)
+    else:
+        HttpResponse(return_message)
 
 

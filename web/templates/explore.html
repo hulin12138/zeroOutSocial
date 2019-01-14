@@ -60,21 +60,21 @@ function change(input)
 				<tr>
 					<td>
 					<p>&nbsp;&nbsp;你可能感兴趣：</p>
-					{%if follow_users%}
+					{%if users%}
 					<table id="block" style="margin-top:25px">
                     <tr>
                     <th> Name </th>
                     <th> Follow </th>
                     <th> Homepage </th>
                     </tr>
-					{%for pair in pairs%}
+					{%for user in users%}
 					    <tr>
-						<td>{{ pair.uname }}</td>
+						<td>{{ user.name }}</td>
                         <td>
 							<form name="FollowForm" action = "{% url 'zeroOut:follow_in_explore' %}" method="post">
                             {% csrf_token %}
 							<p>
-								<input type="hidden" name="followuid" value={{pair.uid}}>
+								<input type="hidden" name="uid" value={{user.uid}}>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<input type="submit" name="FollowUser" value="添加关注"/>
 							</p>
@@ -84,7 +84,7 @@ function change(input)
 						<form name="FollowersHomepageForm" action="{% url 'zeroOut:get_other_user_home' %}" method="post">
                         {% csrf_token %}
 						<p>
-						<input type="hidden" name="uid" value={{pair.uid}}> 
+						<input type="hidden" name="uid" value={{user.uid}}> 
 						&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="submit" name="homepage" value="ta的主页"/>
 						</p>

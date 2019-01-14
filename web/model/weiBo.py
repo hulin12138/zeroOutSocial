@@ -242,7 +242,7 @@ class Weibo():
         if self.time_debug: print("End   get_my_follow_weibo", time.asctime( time.localtime(time.time()) ))
         return HttpResponse(weibo_all)
 
-    
+
 
     #write_weibo("123344", "2014-04-30T15:53:35", "hhh", "UNK", "0", "0", "0", "123456", "hh")
     #get_user_weibo("123456")
@@ -270,7 +270,7 @@ class Weibo():
             if weibo_rdf_id in weibo_all:
                 weibo_relation = weibo_tmp["weibo_relation"]["value"]
                 weibo_z = weibo_tmp["weibo_z"]["value"]
-                if weibo_relation.startswith("file:///D:/d2rq-0.8.1/vocab"):
+                if weibo_relation.startswith("http://localhost:2020/vocab"):
                     weibo_relation = weibo_relation[28:]
                 if weibo_relation.startswith("http://www.w3.org"):
                     continue

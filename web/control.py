@@ -193,9 +193,9 @@ def change_passwd(request):
         redirect(reverse('zeroOut:get_home'))
 
 def random_choose_user(request):
-    query = prefix + ' select ?uid ?uname where { ?x wb:user_screen_name ?uname . ?x wb:user_uid ?uid .}'
+    query = prefix + ' select ?x ?uname where { ?x wb:user_screen_name ?uname .}'
     res = gstore.query('weibo', query)['results']['bindings']
-    pairs = [[i['uid'],i['uname']] for i in res]
+    pairs = [[i['x'][-11,-1],i['uname']] for i in res]
     random.shuffle(pairs)
     pairs = pair[0:10]
     uids = [x[0] for x in pairs]

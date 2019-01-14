@@ -85,6 +85,20 @@ def profile(request):
     context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
     return render(request, 'web/profile.html', context)#TODO
 
+def get_home(request):
+    uid = request.session['uid']
+    print(uid, request.session)
+
+    user = account_user(uid)
+    user.load_from_db()
+
+    f_user = follow_user(gstore)
+    weibo_num = f_user.get_weibo_num(uid)
+    follow_num = f_user.get_follow_num(uid)
+    fan_num = f_user.get_fan_num(uid)
+    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
+    return render(request, 'zeroOut/profile.html', context)
+
 def edit_profile(request):
     uid = request.session['uid']
     user = account_user(uid)

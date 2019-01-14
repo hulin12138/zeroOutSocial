@@ -9,11 +9,11 @@ print("\n\n\n\n\nNew Compile ===================================================
 
 class Weibo():
     def __init__(self, gstore):
-        self.gstore = gstore
+        self.gstore = gstore#TODO
         self.time_debug = False
 
     def write_weibo(self, weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentnsum, weibo_attitudesnum, weibo_uid, weibo_topic):
-        weibo_x = "<file:///D:/d2rq-0.8.1/weibo.nt#weibo/"+weibo_mid+">"
+        weibo_x = "<http://localhost:2020/weibo/"+weibo_mid+">"
         yzs = [
             ["weibo_mid", '"'+weibo_mid+'"'],
             ["weibo_date", '"'+weibo_date+'"'+"^^<http://www.w3.org/2001/XMLSchema#dateTime>"],

@@ -20,7 +20,7 @@ class Weibo():
             ["weibo_text", weibo_text],
             ["weibo_source", '"'+weibo_source+'"'],
             ["weibo_repostsnum", '"'+weibo_repostsnum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
-            ["weibo_commentnsum", '"'+weibo_commentnsum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
+            ["weibo_commentsnum", '"'+weibo_commentnsum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
             ["weibo_attitudesnum", '"'+weibo_attitudesnum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
             ["weibo_uid", '"'+weibo_uid+'"'],
             ["weibo_topic", '"'+weibo_topic+'"']

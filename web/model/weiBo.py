@@ -278,5 +278,6 @@ class Weibo():
             else:
                 weibo_all[weibo_rdf_id] = {"weibo_uid":weibo_tmp["user"]["value"], "weibo_uid_name":weibo_tmp["user_name"]["value"]} # "weibo_uid_name":weibo_tmp["user_name"]
         weibo_all = [i[1] for i in weibo_all.items()]
+        weibo_all = sorted(weibo_all, key=lambda v:v['weibo_date'], reverse=True)
         return weibo_all
 

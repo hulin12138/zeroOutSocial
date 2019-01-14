@@ -15,7 +15,7 @@
 						<a href="/zeroOut/get_home">首页</a>
 					</li>
 					<li class="selected">
-						<a href="homepage.html">个人主页</a>
+						<a href="/zeroOut/get_my_user_home">个人主页</a>
 					</li>
 					<li>
 						<a href="/zeroOut/get_my_follow_user">关注</a>
@@ -47,70 +47,57 @@
 										<td width="78%">
 										<table width="100%" border="0">
 											<tr>
-												<img src=<%=pic %>>
+												<td width="20%">ID</td>
+												<td>{{user.uid}}</td>
 											</tr>
-										</table>
-										<table width="100%" border="0">
 											<tr>
-												<td width="20%">姓名</td>
-												<td width="90%"><%=name%></td>
+												<td width="20%">用户名</td>
+												<td>{{user.name}}</td>
+											</tr>
+											<tr>
+												<td width="20%">昵称</td>
+												<td>{{user.nickName}}</td>
 											</tr>
 											<tr>
 												<td width="20%">性别</td>
-												<td><%=sex %></td>
+												<td>{{user.sex}}</td>
 											</tr>
 											<tr>
-												<td width="20%">出生于</td>
-												<td><%=birthday %></td>
+												<td width="20%">城市</td>
+												<td>{{user.city}}</td>
 											</tr>
-											<tr>
-												<td width="20%">家乡</td>
-												<td><%=hometown %></td>
-											</tr>
-											<tr>
-												<td width="20%">最喜欢的食物：</td>
-												<td><%=food %></td>
-											</tr>
-											<tr>
-												<td width="20%">最喜欢的活动：</td>
-												<td><%=act %></td>
-											</tr>
-											<tr>
-												<td width="20%">最喜欢的电影：</td>
-												<td><%=movie %></td>
-											</tr>											
 										</table>
 										</td>
 										
-										<td>
-												
-					<p>&nbsp;&nbsp;关注：</p>
-										</td>
+							<td>
+                        <p><a href="#">微博</a> {{ weibo_num }} &nbsp; &nbsp; &nbsp;</p>
+                        <p><a href="#">关注</a> {{ follow_num }} &nbsp; &nbsp; &nbsp;</p>
+                        <p><a href="#">粉丝</a> {{ fan_num }}&nbsp; &nbsp; &nbsp;</p>
+						</td>
 									</tr>
 								</table>
 								</td>
 							</tr>
-							<tr height="15">&nbsp;</tr>
 							
 							<tr>
-								<td>
-					<%	
-						java.util.Iterator<socnet.StatusUpdate> it = person.getStatus().iterator();
-						if (it == null)
-						{
-							out.println("Oh, No Status!");
-						}
-						else
-						{							
-							while (it.hasNext())
-							{
-								socnet.StatusUpdate su = it.next();
-								out.println("<p>"+su.getPerson().getName()+" 说： "+
-										su.getStatusText()+"   "+su.getStatusDate()+"</p>");
-							}
-						}
-					%>
-								</td>
+                            <td>
+                    <p>我的微博</p>
+
+                    {%if weibos%}
+                    {%for weibo in weibos%}
+                    <p> -------------------------------------------------------------------------------------------- </p>
+                    <p> {{weibo.weibo_uid_name}} </p>
+                    <p> {{weibo.weibo_date}} </p>
+                    <p> {{weibo.weibo_text}} </p>
+                    <p> 转发：{{weibo.weibo_repostsnum}}
+                    评论：{{weibo.weibo_commentsnum}}
+                    点赞：{{weibo.weibo_attitudesnum}} </p>
+                    {% endfor %}
+                    
+                    {% else %}
+                    <p> No weibos are available.</p>
+                    {% endif %}
+                    </td>
 							</tr>
 						</table>
 	</div>

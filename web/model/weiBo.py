@@ -87,11 +87,11 @@ class Weibo():
         query_str = 'select ?x ?y ?z where {{ ?x <http://localhost:2020/vocab/weibo_uid> "{}" . ?x ?y ?z . }}'.format(weibo_uid)
         if self.time_debug: time_start = time.time()
         res = self.gstore.query("weibo", query_str)
-        if self.time_debug: print("User query:", time.time()-time_start)
+        if self.time_debug:
+            print("User query:", time.time()-time_start)
         #res = json.loads(res)
         res = res["results"]["bindings"]
         weibo_mids = [[i["x"]["value"], i["y"]["value"], i["z"]["value"] ] for i in res]
-        #print(weibo_mids)
         weibo_group = dict()
         for i,j,k in weibo_mids:
             if i in weibo_group:
@@ -103,10 +103,13 @@ class Weibo():
             weibo_per = dict()
             #weibo_per["weibo_uid_name"] = user_name
             for weibo_y, weibo_z in weibo_cons:
-                if weibo_y.startswith("fhttp://localhost:2020/vocab"):
+                if weibo_y.startswith("http://localhost:2020/vocab"):
                     weibo_y = weibo_y[28:]
                     weibo_per[weibo_y] = weibo_z
             weibo_all.append(weibo_per)
+        #  print('*' * 60)
+        #  print(weibo_all[0])
+        #  print('*' * 60)
         weibo_all = sorted(weibo_all, key=lambda v:v["weibo_date"], reverse=True)
         return weibo_all
 

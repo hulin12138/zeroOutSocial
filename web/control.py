@@ -175,16 +175,17 @@ def send_weibo(request):
     weibo = Weibo(gstore)
     return_message = weibo.send_weibo(user_id, weibo_text)
     if return_message == 'success':
-        user = account_user(user_id)
-        user.load_from_db()
-        f_user = follow_user(gstore)
-        weibo_num = f_user.get_weibo_num(user_id)
-        follow_num = f_user.get_follow_num(user_id)
-        fan_num = f_user.get_fan_num(user_id)
-
-        weibos = weibo.get_user_follow_weibo(user_id)
-        context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
-        return render(request, 'usermain.html', context)
+        #  user = account_user(user_id)
+        #  user.load_from_db()
+        #  f_user = follow_user(gstore)
+        #  weibo_num = f_user.get_weibo_num(user_id)
+        #  follow_num = f_user.get_follow_num(user_id)
+        #  fan_num = f_user.get_fan_num(user_id)
+        #
+        #  weibos = weibo.get_user_follow_weibo(user_id)
+        #  context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
+        #  return render(request, 'usermain.html', context)
+        return redirect(reverse('zeroOut:get_home'))
     else:
         return HttpResponseNotFound(return_message)
 

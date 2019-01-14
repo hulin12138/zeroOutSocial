@@ -5,7 +5,7 @@ from django.urls import reverse
 from hashlib import sha256
 from datetime import datetime
 from model.followRelation import User as follow_user#TODO
-from userAccount import userAccount as account_user
+from model.userAccount import userAccount as account_user
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "
 gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")

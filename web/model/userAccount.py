@@ -1,5 +1,7 @@
 #from django.shortcuts import render, redirect
-from . import GstoreConnector
+import sys
+sys.path.append('..')
+from GstoreConnector import GstoreConnector
 #from django.http import HttpResponseNotFound
 #from django.urls import reverse
 #from hashlib import sha256

@@ -4,6 +4,10 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-def login(request):
+def index(request):
     response = render(request, 'login.html')
+    return response
+
+def register(request):
+    response = render(request, 'register.html')
     return response

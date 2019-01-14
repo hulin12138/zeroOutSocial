@@ -1,25 +1,24 @@
 from django.shortcuts import render, redirect
-from . import GstoreConnector
+from GstoreConnector import GstoreConnector
 from django.http import HttpResponseNotFound
 from django.urls import reverse
 from hashlib import sha256
 from datetime import datetime
 from model.followRelation import User as follow_user#TODO
-from model.userAccount import User as account_user
-
+from model.userAccount import userAccount as account_user
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "
-gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")
-
+gstore = GstoreConnector("localhost", 9000, 'root', '123456')
 def login(request):
     try:
-        name = request.POST['username']
-        password = str(request.POST['password'])
+        name = request.POST['name']
+        password = str(request.POST['pwd'])
     except KeyError:
         return HttpResponseNotFound("No username or password sent")
     else:
-        sparql = '''{} select ?m where {{ ?x wb:user_name "{}". 
-                    ?x wb:user_uid ?m .}}'''.format(prefix, name)
+        sparql = '''{} select ?m where {{ ?x wb:user_name "{}".
+                      ?x wb:user_uid ?m .}}'''.format(prefix, name)
+        #  sparql = 'select ?x { <http://localhost:2020/user/2452144190> <http://localhost:2020/vocab/user_gender> ?x .}'
         result = gstore.query('weibo', sparql)['results']['bindings']
         print('get uid', result)
         if not result:

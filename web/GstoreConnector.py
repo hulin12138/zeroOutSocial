@@ -8,16 +8,18 @@
 import requests
 
 defaultServerIP = "127.0.0.1"
-defaultServerPort = "3305"
+defaultServerPort = "9000"
 
 class GstoreConnector:
-    def __init__(self, ip, port):
+    def __init__(self, ip, port, username, password):
         if (ip == "localhost"):
             self.serverIP = defaultServerIP
         else:
             self.serverIP = ip
         self.serverPort = port
         self.Url = "http://" + self.serverIP + ":" + str(self.serverPort)
+        self.username = username
+        self.password = password
    
     def UrlEncode(self, s):
         ret = ""
@@ -39,7 +41,7 @@ class GstoreConnector:
 
     def Get(self, strUrl):
         r = requests.get(self.UrlEncode(strUrl))
-        return r.text
+        return r.json()
 
     def fGet(self, strUrl, filename):
         r = requests.get(self.UrlEncode(strUrl), stream=True)
@@ -72,8 +74,8 @@ class GstoreConnector:
             return True
         return False
 
-    def query(self, username, password, db_name, sparql):
-        cmd = self.Url + "/?operation=query&username=" + username + "&password=" + password + "&db_name=" + db_name + "&format=json&sparql=" + sparql
+    def query(self, db_name, sparql):
+        cmd = self.Url + "/?operation=query&username=" + self.username + "&password=" + self.password + "&db_name=" + db_name + "&format=json&sparql=" + sparql
         return self.Get(cmd)
 
     def fquery(self, username, password, db_name, sparql, filename):

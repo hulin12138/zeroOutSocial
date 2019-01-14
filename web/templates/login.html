@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<title>ZeroOut登录</title>
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
-	<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7.css" type="text/css">
-		<![endif]-->
 
 <script language="javascript">
 function check(form){
@@ -52,6 +49,7 @@ function check1(){
 				<div id="featured">
 					<h3>ZeroOut Social</h3>
 					<form name="loginForm" action="{% url 'zeroOut:login' %}" method="post">
+                    {% csrf_token %}
 						<table width="100%" border="0" cellpadding="0" cellspacing="0"
 							bordercolorlight="#FFFFFF" bordercolordark="#D2E3E6">
 							<tr>

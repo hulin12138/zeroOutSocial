@@ -36,4 +36,6 @@ urlpatterns = [
     path('send_weibo', control.send_weibo, name="send_weibo"),
     path('get_my_weibo', views.get_my_weibo, name="get_my_weibo"),
     path('get_my_follow_weibo', views.get_my_follow_weibo, name="get_my_follow_weibo"),
+    path('get_my_user_home',control.get_my_user_home, name='get_my_user_home'),
+    path('get_other_user_home',control.get_other_user_home, name='get_other_user_home')
 ]

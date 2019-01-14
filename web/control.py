@@ -102,8 +102,8 @@ def get_home(request):#go to page after login
     weibos = weibo.get_user_follow_weibo(uid)
     context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
     return render(request, 'usermain.html', context)
-'''
-def get_user_home(request, uid):#goto person home page
+
+def get_user_home(uid):#goto person home page
     user = account_user(uid)
     user.load_from_db()
 
@@ -113,8 +113,19 @@ def get_user_home(request, uid):#goto person home page
     fan_num = f_user.get_fan_num(uid)
 
     weibo = Weibo(gstore)
-    weibos = weibo.get_
-'''
+    weibos = weibo.get_user_weibo(uid)
+    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}
+    return context
+
+def get_my_user_home(request):
+    uid = request.session['uid']
+    context = self.get_user_home(uid)
+    return render(request, 'homepage.html', context)
+
+def get_other_user_home(requet):
+    uid = request.POST['uid']
+    context = self.get_user_home(uid)
+    return render(request, 'homepage.html', context)
 
 def edit_profile(request):
     uid = request.session['uid']

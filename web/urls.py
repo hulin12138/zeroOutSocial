@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from . import control
 
 app_name = 'zeroOut'
 urlpatterns = [
-    path('login', views.login, name='login'),
+    path('', views.index, name='index'),
+    path('login', control.login, name='login'),
     path('register', views.register, name='register'),
-    path('login.html', views.login, name='login'),
+    path('login.html', views.index, name='index'),
     path('register.html', views.register, name='register'),
 
 ]

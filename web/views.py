@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-def login(request):
-    response = render(request, 'login.html')
+def index(request):
+    response = render(requset, 'login.html')
     return response
 
 def register(request):

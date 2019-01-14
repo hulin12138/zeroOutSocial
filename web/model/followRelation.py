@@ -4,7 +4,9 @@ from django.shortcuts import render
 
 import time
 import json
-from . import GstoreConnector
+import sys
+sys.path.append('..')
+from GstoreConnector import GstoreConnector
 
 print("\n\n\n\n\nNew Compile =========================================================================================")
 

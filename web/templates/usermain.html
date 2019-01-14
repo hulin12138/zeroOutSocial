@@ -91,11 +91,17 @@ function clickText(textarea)
 
                     {%if weibos%}
                     {%for weibo in weibos%}
-
+                    <p> -------------------------------------------------------------------------------------------- </p>
+                    <p> {{weibo.weibo_uid_name}} </p>
+                    <p> {{weibo.weibo_date}} </p>
+                    <p> {{weibo.weibo_text}} </p>
+                    <p> 转发：{{weibo.weibo_repostsnum}}
+                    评论：{{weibo.weibo_commentsnum}}
+                    点赞：{{weibo.weibo_attitudesnum}} </p>
                     {% endfor %}
                     
                     {% else %}
-
+                    <p> No weibos are available.</p>
                     {% endif %}
 					</ul>
 				</div>

@@ -119,12 +119,12 @@ def get_user_home(uid):#goto person home page
 
 def get_my_user_home(request):
     uid = request.session['uid']
-    context = self.get_user_home(uid)
+    context = get_user_home(uid)
     return render(request, 'homepage.html', context)
 
 def get_other_user_home(requet):
     uid = request.POST['uid']
-    context = self.get_user_home(uid)
+    context = get_user_home(uid)
     return render(request, 'homepage.html', context)
 
 def edit_profile(request):

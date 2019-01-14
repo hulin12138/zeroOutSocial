@@ -25,7 +25,8 @@ def register(request):
 def get_my_follow_user(request):
     return user.get_my_follow_user(request)
 
-def delete_follow_user(request, uid):
+def delete_follow_user(request):
+    uid = request.POST['followuid']
     return user.delete_follow_user(request, uid)
 
 def get_my_fan(request):

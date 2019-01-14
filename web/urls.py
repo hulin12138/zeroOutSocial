@@ -28,5 +28,6 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('login.html', views.index, name='index'),
     path('register.html', views.register, name='register'),
-
+    path('get_home', control.get_home, name='get_home'),
+    path('usermain.html', control.get_home, name='get_home'),
 ]

@@ -38,4 +38,5 @@ urlpatterns = [
     path('delete_weibo', views.delete_weibo, name="delete_weibo"),
     path('get_my_weibo', views.get_my_weibo, name="get_my_weibo"),
     path('get_my_follow_weibo', views.get_my_follow_weibo, name="get_my_follow_weibo"),
+    path('get_user_home', views.get_user_home, name="get_user_home")
 ]

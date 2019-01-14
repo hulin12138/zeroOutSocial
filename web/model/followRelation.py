@@ -88,7 +88,7 @@ class User():
         fan_num = self.get_fan_num(uid)	
         flag = len(res)
         context = {'uid': uid, 'name': name, 'location': location, 'gender': gender, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'flag': flag}
-        return render(request, 'user/user.html', context)#TODO	
+        return render(request, 'user.html', context)#TODO	
 		
     def get_my_follow_user(self, request):
         if "uid" not in request.session:

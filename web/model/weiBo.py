@@ -12,7 +12,7 @@ class Weibo():
         self.gstore = gstore#TODO
         self.time_debug = False
 
-    def write_weibo(self, weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentnsum, weibo_attitudesnum, weibo_uid, weibo_topic):
+    def write_weibo(self, weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentsnum, weibo_attitudesnum, weibo_uid, weibo_topic):
         weibo_x = "<http://localhost:2020/weibo/"+weibo_mid+">"
         yzs = [
             ["weibo_mid", '"'+weibo_mid+'"'],
@@ -20,7 +20,7 @@ class Weibo():
             ["weibo_text", weibo_text],
             ["weibo_source", '"'+weibo_source+'"'],
             ["weibo_repostsnum", '"'+weibo_repostsnum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
-            ["weibo_commentsnum", '"'+weibo_commentnsum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
+            ["weibo_commentsnum", '"'+weibo_commentsnum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
             ["weibo_attitudesnum", '"'+weibo_attitudesnum+'"'+"^^<http://www.w3.org/2001/XMLSchema#integer>"],
             ["weibo_uid", '"'+weibo_uid+'"'],
             ["weibo_topic", '"'+weibo_topic+'"']
@@ -139,8 +139,8 @@ class Weibo():
         weibo_mid = str(time.time())
         weibo_source = "UNK"
         weibo_date = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
-        weibo_commentnsum, weibo_repostsnum, weibo_attitudesnum = "0", "0", "0"
-        status, error_info = self.write_weibo(weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentnsum, weibo_attitudesnum, weibo_uid, weibo_topic)
+        weibo_commentsnum, weibo_repostsnum, weibo_attitudesnum = "0", "0", "0"
+        status, error_info = self.write_weibo(weibo_mid, weibo_date, weibo_text, weibo_source, weibo_repostsnum,  weibo_commentsnum, weibo_attitudesnum, weibo_uid, weibo_topic)
         if status:
             return HttpResponse("success")
         else:

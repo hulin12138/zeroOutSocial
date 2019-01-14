@@ -71,7 +71,7 @@ def check_register(request):
                 request.POST['sex'], date, password)
     user.save_to_db()
     request.session['uid'] = uid
-    return redirect(reverse('zeroOut:profile'))#TODO
+    return redirect(reverse('zeroOut:index'))#TODO
 
 def get_home(request):#go to page after login
     uid = request.session['uid']

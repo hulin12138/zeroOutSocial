@@ -49,8 +49,8 @@ def register(request):
 
 
 def check_register(request):
-    name = request.POST['name']
-    password = request.POST['password']
+    name = request.POST['a_name']
+    password = request.POST['a_pass']
     print('check name: ', name)
     sparql = '''{} select ?m where {{ ?x wb:user_name "{}". 
                         ?x wb:user_uid ?m .}}'''.format(prefix, name)
@@ -69,7 +69,7 @@ def check_register(request):
                 request.POST['sex'], date, password)
     user.save_to_db()
     request.session['uid'] = uid
-    return redirect(reverse('web:profile'))#TODO
+    return redirect(reverse('zeroOut:profile'))#TODO
 
 def profile(request):
     uid = request.session['uid']

@@ -40,12 +40,6 @@ def delete_fan(request):
     uid = request.POST['fanuid']
     return user.delete_fan(request,uid)
 
-def send_weibo(request):
-    return weibo.send_weibo(request)
-
-def delete_weibo(request):
-    return weibo.delete_weibo(request)
-
 def get_my_weibo(request):
     return weibo.get_my_weibo(request)
 

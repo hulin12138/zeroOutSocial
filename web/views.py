@@ -22,6 +22,10 @@ def register(request):
     response = render(request, 'register.html')
     return response
 
+def about(request):
+    response = render(request, 'about.html')
+    return response
+
 def get_my_follow_user(request):
     return user.get_my_follow_user(request)
 

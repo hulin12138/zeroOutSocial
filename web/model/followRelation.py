@@ -8,6 +8,9 @@ import sys
 sys.path.append('..')
 from GstoreConnector import GstoreConnector
 
+predicatePrefix = 'http://localhost:2020/vocab/'
+userPrefix = 'http://localhost:2020/user/'
+
 print("\n\n\n\n\nNew Compile =========================================================================================")
 
 class User_Info():
@@ -20,45 +23,45 @@ class User():
         self.gstore = gstore#TODO
 
     def get_user_name(self, user_id):
-        query_str = "select ?x where{ <file:///D:/d2rq-0.8.1/weibo.nt#user/" + user_id + "> <file:///D:/d2rq-0.8.1/vocab/user_screen_name> ?x.}"
+        query_str = "select ?x where{ <" + userPrefix + user_id + "> <" + predicatePrefix + "user_screen_name> ?x.}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"][0]["x"]["value"]
         return res
 
     def get_location(self, user_id):
-        query_str = "select ?x where{ <file:///D:/d2rq-0.8.1/weibo.nt#user/" + user_id + "> <file:///D:/d2rq-0.8.1/vocab/user_location> ?x.}"
+        query_str = "select ?x where{ <" + userPrefix + user_id + "> <" + predicatePrefix + "user_location> ?x.}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"][0]["x"]["value"]
         return res
 		
     def get_gender(self, user_id):
-        query_str = "select ?x where{ <file:///D:/d2rq-0.8.1/weibo.nt#user/" + user_id + "> <file:///D:/d2rq-0.8.1/vocab/user_gender> ?x.}"
+        query_str = "select ?x where{ <" + userPrefix + user_id + "> <" + predicatePrefix + "user_gender> ?x.}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"][0]["x"]["value"]
         return res
 		
     def get_weibo_num(self, user_id):
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/weibo_uid> \"" + user_id + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "weibo_uid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         print(res)
         return len(res)
 		
     def get_follow_num(self, user_id):
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + user_id + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         return len(res)
 		
     def get_fan_num(self, user_id):
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + user_id + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_tuid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         return len(res)
 
     def get_my_home(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
         name = self.get_user_name(user_id)
@@ -66,15 +69,15 @@ class User():
         follow_num = self.get_follow_num(user_id)	
         fan_num = self.get_fan_num(user_id)	
         context = {'uid': user_id, 'name': name, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}
-        return render(request, 'user/my.html', context)
+        return render(request, 'user/my.html', context)#TODO
 	
     def get_user_home(self, request, uid):
         if "uid" not in request.session:
             response = HttpResponseRedirect(reverse('myapp:index'))
             return response
         user_id = request.session.get("uid")
-        st = "<file:///D:/d2rq-0.8.1/weibo.nt#userrelation/" + user_id + "/" + uid + ">"
-        query_str = "select * where{ " + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + user_id + "\".}"
+        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+        query_str = "select * where{ " + st + " <" + predicatePrefix +  "userrelation_suid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         name = self.get_user_name(uid)
@@ -85,14 +88,14 @@ class User():
         fan_num = self.get_fan_num(uid)	
         flag = len(res)
         context = {'uid': uid, 'name': name, 'location': location, 'gender': gender, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'flag': flag}
-        return render(request, 'user/user.html', context)	
+        return render(request, 'user/user.html', context)#TODO	
 		
     def get_my_follow_user(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + user_id + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         users = []
@@ -103,14 +106,14 @@ class User():
             user = User_Info(uid, name)
             users.append(user)
         context = {'follow_users': users}
-        return render(request, 'user/my_follow.html', context)
+        return render(request, 'user/my_follow.html', context)#TODO
 		
     def get_follow_user(self, request, uid):
         if "uid" not in request.session:
             response = HttpResponseRedirect(reverse('myapp:index'))
             return response
         user_id = request.session.get("uid")
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + uid + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         users = []
@@ -121,34 +124,34 @@ class User():
             user = User_Info(id, name)
             users.append(user)
         context = {'follow_users': users}
-        return render(request, 'user/follow.html', context)	
+        return render(request, 'user/follow.html', context)#TODO
 
     def delete_follow_user(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        st = "<file:///D:/d2rq-0.8.1/weibo.nt#userrelation/" + user_id + "/" + uid + ">"
-        query_str = "delete data{ " + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
+        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+        query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
         return self.get_my_follow_user(request)
 		
     def add_follow_user(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        st = "<file:///D:/d2rq-0.8.1/weibo.nt#userrelation/" + user_id + "/" + uid + ">"
-        query_str = "insert data{ " + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
+        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+        query_str = "insert data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
-        return self.get_user_home(request, uid)
+        return self.get_user_home(request, uid)#TODO
 		
     def get_my_fan(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + user_id + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_tuid> \"" + user_id + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         users = []
@@ -160,14 +163,14 @@ class User():
             user = User_Info(uid, name)
             users.append(user)
         context = {'fans': users}
-        return render(request, 'user/my_fan.html', context)
+        return render(request, 'user/my_fan.html', context)#
 		
     def get_fan(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        query_str = "select ?x where{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
+        query_str = "select ?x where{ ?x <" + predicatePrefix +"userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"]
         users = []
@@ -179,4 +182,4 @@ class User():
             user = User_Info(id, name)
             users.append(user)
         context = {'fans': users}
-        return render(request, 'user/fan.html', context)	
+        return render(request, 'user/fan.html', context)#TODO

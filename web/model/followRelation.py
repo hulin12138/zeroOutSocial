@@ -84,24 +84,6 @@ class User():
             users.append(user)
         context = {'follow_users': users}
         return render(request, 'follow.html', context)#TODO
-		
-    def get_follow_user(self, request, uid):
-        if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('zeroOut:index'))
-            return response
-        user_id = request.session.get("uid")
-        query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + uid + "\".}"
-        res = self.gstore.query("weibo", query_str)
-        res = res["results"]["bindings"]
-        users = []
-        for i in res:
-            sub = i["x"]["value"]
-            id = sub[sub.find(uid)+len(uid)+1:]
-            name = self.get_user_name(id)
-            user = User_Info(id, name)
-            users.append(user)
-        context = {'follow_users': users}
-        return render(request, 'user/follow.html', context)#TODO
 
     def delete_follow_user(self, request, uid):
         if "uid" not in request.session:

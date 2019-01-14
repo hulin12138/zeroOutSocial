@@ -3,9 +3,9 @@ from django.urls import reverse
 from django.shortcuts import render
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-import sys.path
-path.append(model)
-path.append(../web)
+import sys
+sys.path.append('./web/model')
+sys.path.append('./web')
 from GstoreConnector import GstoreConnector
 from weiBo import Weibo
 from followRelation import User
@@ -23,7 +23,7 @@ def register(request):
     return response
 
 def get_my_follow_user(request):
-	return user.get_my_follow_user(request)
+    return user.get_my_follow_user(request)
 
 def delete_follow_user(request, uid):
     return user.delete_follow_user(request, uid)
@@ -32,5 +32,5 @@ def get_my_fan(request):
     return user.get_my_fan(request)
 
 def delete_fan(request, uid):
-	return user.delete_fan(request,uid)
+    return user.delete_fan(request,uid)
 	

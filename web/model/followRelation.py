@@ -61,7 +61,7 @@ class User():
 
     def get_my_home(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         name = self.get_user_name(user_id)
@@ -73,7 +73,7 @@ class User():
 	
     def get_user_home(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('zeroOut:index'))
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
@@ -92,7 +92,7 @@ class User():
 		
     def get_my_follow_user(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\".}"
@@ -110,7 +110,7 @@ class User():
 		
     def get_follow_user(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('zeroOut:index'))
             return response
         user_id = request.session.get("uid")
         query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_suid> \"" + uid + "\".}"
@@ -128,7 +128,7 @@ class User():
 
     def delete_follow_user(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
@@ -138,7 +138,7 @@ class User():
 		
     def add_follow_user(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
@@ -148,7 +148,7 @@ class User():
 		
     def get_my_fan(self, request):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         query_str = "select ?x where{ ?x <" + predicatePrefix + "userrelation_tuid> \"" + user_id + "\".}"
@@ -163,11 +163,11 @@ class User():
             user = User_Info(uid, name)
             users.append(user)
         context = {'fans': users}
-        return render(request, 'user/my_fan.html', context)#
+        return render(request, 'fans.html', context)#
 
     def delete_fan(self, request, uid):
-		if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+        if "uid" not in request.session:
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
@@ -177,7 +177,7 @@ class User():
 
     def get_fan(self, request, uid):
         if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
         query_str = "select ?x where{ ?x <" + predicatePrefix +"userrelation_tuid> \"" + uid + "\".}"

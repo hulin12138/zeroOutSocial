@@ -191,15 +191,32 @@ def change_passwd(request):
             prefix, user_entity, 'user_password', new_passwd)
         gstore.query('weibo', query)
         return redirect(reverse('zeroOut:get_home'))
-'''
+
 def random_choose_user(request):
     query = prefix + ' select ?uid ?uname where { ?x wb:user_screen_name ?uname . ?x wb:user_uid ?uid .}'
     res = gstore.query('weibo', query)['results']['bindings']
-    pair = [   ]
-'''
+    pairs = [[i['uid'],i['uname']] for i in res]
+    random.shuffle(pairs)
+    pairs = pair[0:10]
+    uids = [x[0] for x in pairs]
+    unames = [x[1] for x in pairs]
+    context = {'uids':uids, 'unames':unames}
+    return render(request,'explore.html',context)
+
+def follow_in_explore(request):
+    if "uid" not in request.session:
+        response = HttpResponseRedirect(reverse('zeroOut:explore'))#TODO
+        return response
+    user_id = request.session.get("uid")
+    uid = request.POST['uid']
+    st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+    query_str = "insert data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_tuid> \"" + uid + "\".}"
+    res = gstore.query("weibo", query_str)
+    return redirect(reverse('zeroOut:explore'))
+
 def send_weibo(request):
     if "uid"  not in request.session:
-        response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+        response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
         return response
     #print("Gookie got", request.session.get("user"))
     user_id = request.session.get("uid")

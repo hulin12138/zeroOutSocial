@@ -42,6 +42,6 @@ urlpatterns = [
     path('update_profile',control.update_profile, name='update_profile'),
     path('change_passwd',control.change_passwd, name='change_passwd'),
     path('enter_change_passwd',views.enter_change_passwd, name='enter_change_passwd'),
-    path('explore'.control.random_choose_user, name='explore'),
+    path('explore', control.random_choose_user, name='explore'),
     path('follow_in_explore',control.follow_in_explore, name='follow_in_explore')
 ]

@@ -29,7 +29,7 @@ function change(input)
 					<li>
 						<a href="/zeroOut/get_my_user_home">个人主页</a>
 					</li>
-					<li class="selected">
+					<li> 
 						<a href="/zeroOut/get_my_follow_user">关注</a>
 					</li>
 					<li >
@@ -40,6 +40,9 @@ function change(input)
 					</li>
 					<li>
 						<a href="/zeroOut/enter_change_passwd">我的帐号</a>
+					</li>
+					<li class="selected">
+						<a href="/zeroOut/explore">随便看看</a>
 					</li>
 					<li>
 						<a href="/zeroOut/">登出</a>
@@ -64,16 +67,16 @@ function change(input)
                     <th> Follow </th>
                     <th> Homepage </th>
                     </tr>
-					{%for follow in follow_users%}
+					{%for pair in pairs%}
 					    <tr>
-						<td>{{ follow.name }}</td>
+						<td>{{ pair.uname }}</td>
                         <td>
-							<form name="FollowForm" action = "{% url 'zeroOut:delete_follow_user' %}" method="post">
+							<form name="FollowForm" action = "{% url 'zeroOut:follow_in_explore' %}" method="post">
                             {% csrf_token %}
 							<p>
-								<input type="hidden" name="followuid" value={{follow.uid}}>
+								<input type="hidden" name="followuid" value={{pair.uid}}>
 								&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="removeFollowUser" value="移除关注"/>
+								<input type="submit" name="FollowUser" value="添加关注"/>
 							</p>
 						    </form>
                         </td>
@@ -81,7 +84,7 @@ function change(input)
 						<form name="FollowersHomepageForm" action="{% url 'zeroOut:get_other_user_home' %}" method="post">
                         {% csrf_token %}
 						<p>
-						<input type="hidden" name="uid" value={{follow.uid}}> 
+						<input type="hidden" name="uid" value={{pair.uid}}> 
 						&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="submit" name="homepage" value="ta的主页"/>
 						</p>

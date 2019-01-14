@@ -7,6 +7,7 @@ from datetime import datetime
 from model.followRelation import User as follow_user#TODO
 from model.userAccount import userAccount as account_user
 from model.weiBo import Weibo
+import random
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "
 gstore = GstoreConnector("localhost", 9000, 'root', '123456')
@@ -193,14 +194,12 @@ def change_passwd(request):
         return redirect(reverse('zeroOut:get_home'))
 
 def random_choose_user(request):
-    query = prefix + ' select ?uid ?uname where { ?x wb:user_screen_name ?uname . ?x wb:user_uid ?uid .}'
+    query = prefix + ' select ?x ?uname where { ?x wb:user_screen_name ?uname .}'
     res = gstore.query('weibo', query)['results']['bindings']
-    pairs = [[i['uid'],i['uname']] for i in res]
+    pairs = [{'uid':i['x']['value'][-10:-1],'uname':i['uname']['value']} for i in res]
     random.shuffle(pairs)
-    pairs = pair[0:10]
-    uids = [x[0] for x in pairs]
-    unames = [x[1] for x in pairs]
-    context = {'uids':uids, 'unames':unames}
+    pairs = pairs[0:10]
+    context = {'pairs':pairs}
     return render(request,'explore.html',context)
 
 def follow_in_explore(request):

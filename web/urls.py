@@ -24,8 +24,10 @@ app_name = 'zeroOut'
 urlpatterns = [
     path('', views.index, name='index'),
     path('login', control.login, name='login'),
+    path('check_register', control.check_register, name='check_register'),
     path('register', views.register, name='register'),
     path('login.html', views.index, name='index'),
     path('register.html', views.register, name='register'),
-
+    path('get_home', control.get_home, name='get_home'),
+    path('usermain.html', control.get_home, name='get_home'),
 ]

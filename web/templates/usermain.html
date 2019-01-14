@@ -1,21 +1,9 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="socnet.StatusUpdate"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-
 	<title>我的首页
-	<%
-		System.out.println(session.getAttribute("name"));
-
-%>
-</title>
+    </title>
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
-	<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7.css" type="text/css">
-		<![endif]-->
 		<script>
 <!--
 function checkLength(textarea)
@@ -44,11 +32,6 @@ function clickText(textarea)
 
 </head>
 <body>
-
-<%
-	String name = (String)session.getAttribute("loginname");
-	%>
-<form name="form1" action="UpdateNewsServlet" method="post">
 <div class="page">
 		<div class="header">
 			<div>
@@ -83,7 +66,8 @@ function clickText(textarea)
 		</div>
 		
 		<div class="body">
-			<form name="form1" action="UpdateNewsServlet" method="post">	
+			<form name="form1" action="{% usr 'zeroOut:get_home' %}" method="post">	
+            {% csrf_token %}
 			<div>
 				<div>
 				<ul class="blog">							
@@ -93,8 +77,9 @@ function clickText(textarea)
 								<textarea name="my_news" id="my_news" rows="10" cols="60" onClick="return clickText(this)"></textarea>
 							</td>
 							<td>
-								<p><a href="follow.html">关注</a></p>
-								<p><a href="fans.html">粉丝</a></p>
+                                <h1 align="center"><a href="#">微博</a> {{ weibo_num }} &nbsp; &nbsp; &nbsp;
+                                <a href="/zeroOut/get_my_follow_user">关注</a> {{ follow_num }} &nbsp; &nbsp; &nbsp;
+                                <a href="/zeroOut/get_my_fan">粉丝</a> {{ fan_num }}</h1>
 							</td>
 						 </tr>
 						 <tr>
@@ -104,34 +89,7 @@ function clickText(textarea)
 						</table>
 					</ul>
 					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />
-					<%
-						pR = pR.getPersonRepository();
-						socnet.Person person = pR.getPersonByName(name);
-						java.util.Iterator<socnet.StatusUpdate> it = person.getAllStatuses();
-					%>
-					
 					<ul><p>好友们的新鲜事</p>
-					<%	
-						if (it == null)
-						{
-							out.println("Oh, No Status!");
-						}
-						else
-						{							
-							while (it.hasNext())
-							{
-								socnet.StatusUpdate su = it.next();
-								String fname = su.getPerson().getName();
-								String isoName = new String(fname.getBytes("utf-8"),"ISO8859-1");
-								//String fname = new String(su.getPerson().getName().getBytes("ISO8859-1"), "utf-8");
-								String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
-								System.out.println(ahref);
-								out.println("<p>"+ahref+" 说： "+
-										su.getStatusText()+"   "+su.getStatusDate()+"</p>");
-							}
-						}
-					%>
-						
 					</ul>
 				<ul class="paging">
 						<li>

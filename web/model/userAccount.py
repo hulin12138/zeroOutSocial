@@ -10,6 +10,7 @@ from GstoreConnector import GstoreConnector
 
 gstore = GstoreConnector("localhost", 9000, "root", "123456")
 #gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")
+prefix = "prefix wb: <http://localhost:2020/vocab/> "
 
 class userAccount:
     def __init__ (self,uid,name='',nickName='',sex='',city='',creaDate='',password=''):
@@ -18,7 +19,7 @@ class userAccount:
         self.sex = sex
         self.city = city
         self.creaDate = creaDate
-        self.password = passwd
+        self.password = password
         self.uid = uid
         self.predicates = ['user_name', 'user_screen_name', 'user_location',
                            'user_gender', 'user_created_at']

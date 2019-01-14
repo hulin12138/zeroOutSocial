@@ -4,9 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>ZeroOut注册</title>
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
-	<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7.css" type="text/css">
-		<![endif]-->
 <script>
 <!--
 	function check_info(form)
@@ -98,7 +95,8 @@
 		<div class="body">
 			<div>
 				<div>
-				<form action="{% url 'zeroOut:register' %}" method="post" onSubmit="return check_info(this);">
+				<form action="{% url 'zeroOut:check_register' %}" method="post" onSubmit="return check_info(this);">
+                {% csrf_token %}
 					<ul class="blog">							
 								<center>
 								<table width="100%" border="0" bordercolor="#99CCFF" cellpadding="0"
@@ -123,6 +121,11 @@
 										<input type="password" name="a_pass2" size="28"/> </td>
 									</tr>
 									<tr>
+										<td width="24%" height="30" align="right">昵称：<font color="red">*</font></td>
+										<td width="76%" height="30" align="left">&nbsp;&nbsp;
+										<input type="text" name="nick" size="28"/>&nbsp;（沈保送）
+									</tr>
+									<tr>
 										<td height="30" align="right">性别：&nbsp;</td>
 										<td height="30" align="left">&nbsp;&nbsp;&nbsp; 
 										<input type="radio" name="sex" value="男" />男
@@ -135,6 +138,11 @@
 										<input type="text" name="a_email" size="28"/> （someone@example.com）</td>
 									</tr>
 									<tr>
+										<td height="30" align="right">城市：<font color="red">*</font></td>
+										<td height="30" align="left">&nbsp;&nbsp;
+										<input type="text" name="city" size="28"/> （火星）</td>
+									</tr>
+									<tr>
 										<td width="24%" height="30" align="right">出生日期：&nbsp;</td>
 										<td width="76%" height="30" align="left">&nbsp;&nbsp;&nbsp;<input
 											type="text" name="birthday" size="28"/> （出生年月日&nbsp;[<font color="red">YYYY-MM-DD</font>]）
@@ -145,67 +153,67 @@
 										<td height="30" align="left">&nbsp;&nbsp;&nbsp; 
 										<select name=reg_userPic size=1
 											onChange="document.images['avatar'].src=options[selectedIndex].value;">
-											<option value="images/face/Image1.gif">Image1
-											<option value="images/face/Image2.gif">Image2
-											<option value="images/face/Image3.gif">Image3
-											<option value="images/face/Image4.gif">Image4
-											<option value="images/face/Image5.gif">Image5
-											<option value="images/face/Image6.gif">Image6
-											<option value="images/face/Image7.gif">Image7
-											<option value="images/face/Image8.gif">Image8
-											<option value="images/face/Image9.gif">Image9
-											<option value="images/face/Image10.gif">Image10
-											<option value="images/face/Image11.gif">Image11
-											<option value="images/face/Image12.gif">Image12
-											<option value="images/face/Image13.gif">Image13
-											<option value="images/face/Image14.gif">Image14
-											<option value="images/face/Image15.gif">Image15
-											<option value="images/face/Image16.gif">Image16
-											<option value="images/face/Image17.gif">Image17
-											<option value="images/face/Image18.gif">Image18
-											<option value="images/face/Image19.gif">Image19
-											<option value="images/face/Image20.gif">Image20
-											<option value="images/face/Image21.gif">Image21
-											<option value="images/face/Image22.gif">Image22
-											<option value="images/face/Image23.gif">Image23
-											<option value="images/face/Image24.gif">Image24
-											<option value="images/face/Image25.gif">Image25
-											<option value="images/face/Image26.gif">Image26
-											<option value="images/face/Image27.gif">Image27
-											<option value="images/face/Image28.gif">Image28
-											<option value="images/face/Image29.gif">Image29
-											<option value="images/face/Image30.gif">Image30
-											<option value="images/face/Image31.gif">Image31
-											<option value="images/face/Image32.gif">Image32
-											<option value="images/face/Image33.gif">Image33
-											<option value="images/face/Image34.gif">Image34
-											<option value="images/face/Image35.gif">Image35
-											<option value="images/face/Image36.gif">Image36
-											<option value="images/face/Image37.gif">Image37
-											<option value="images/face/Image38.gif">Image38
-											<option value="images/face/Image39.gif">Image39
-											<option value="images/face/Image40.gif">Image40
-											<option value="images/face/Image41.gif">Image41
-											<option value="images/face/Image42.gif">Image42
-											<option value="images/face/Image43.gif">Image43
-											<option value="images/face/Image44.gif">Image44
-											<option value="images/face/Image45.gif">Image45
-											<option value="images/face/Image46.gif">Image46
-											<option value="images/face/Image47.gif">Image47
-											<option value="images/face/Image48.gif">Image48
-											<option value="images/face/Image49.gif">Image49
-											<option value="images/face/Image50.gif">Image50
-											<option value="images/face/Image51.gif">Image51
-											<option value="images/face/Image52.gif">Image52
-											<option value="images/face/Image53.gif">Image53
-											<option value="images/face/Image54.gif">Image54
-											<option value="images/face/Image55.gif">Image55
-											<option value="images/face/Image56.gif">Image56
-											<option value="images/face/Image57.gif">Image57
-											<option value="images/face/Image58.gif">Image58
-											<option value="images/face/Image59.gif">Image59
-											<option value="images/face/Image60.gif">Image60
-										</select> &nbsp;&nbsp;<img id=avatar src="images/face/Image1.gif" alt=个人头像
+											<option value="../static/images/face/Image1.gif">Image1
+											<option value="../static/images/face/Image2.gif">Image2
+											<option value="../static/images/face/Image3.gif">Image3
+											<option value="../static/images/face/Image4.gif">Image4
+											<option value="../static/images/face/Image5.gif">Image5
+											<option value="../static/images/face/Image6.gif">Image6
+											<option value="../static/images/face/Image7.gif">Image7
+											<option value="../static/images/face/Image8.gif">Image8
+											<option value="../static/images/face/Image9.gif">Image9
+											<option value="../static/images/face/Image10.gif">Image10
+											<option value="../static/images/face/Image11.gif">Image11
+											<option value="../static/images/face/Image12.gif">Image12
+											<option value="../static/images/face/Image13.gif">Image13
+											<option value="../static/images/face/Image14.gif">Image14
+											<option value="../static/images/face/Image15.gif">Image15
+											<option value="../static/images/face/Image16.gif">Image16
+											<option value="../static/images/face/Image17.gif">Image17
+											<option value="../static/images/face/Image18.gif">Image18
+											<option value="../static/images/face/Image19.gif">Image19
+											<option value="../static/images/face/Image20.gif">Image20
+											<option value="../static/images/face/Image21.gif">Image21
+											<option value="../static/images/face/Image22.gif">Image22
+											<option value="../static/images/face/Image23.gif">Image23
+											<option value="../static/images/face/Image24.gif">Image24
+											<option value="../static/images/face/Image25.gif">Image25
+											<option value="../static/images/face/Image26.gif">Image26
+											<option value="../static/images/face/Image27.gif">Image27
+											<option value="../static/images/face/Image28.gif">Image28
+											<option value="../static/images/face/Image29.gif">Image29
+											<option value="../static/images/face/Image30.gif">Image30
+											<option value="../static/images/face/Image31.gif">Image31
+											<option value="../static/images/face/Image32.gif">Image32
+											<option value="../static/images/face/Image33.gif">Image33
+											<option value="../static/images/face/Image34.gif">Image34
+											<option value="../static/images/face/Image35.gif">Image35
+											<option value="../static/images/face/Image36.gif">Image36
+											<option value="../static/images/face/Image37.gif">Image37
+											<option value="../static/images/face/Image38.gif">Image38
+											<option value="../static/images/face/Image39.gif">Image39
+											<option value="../static/images/face/Image40.gif">Image40
+											<option value="../static/images/face/Image41.gif">Image41
+											<option value="../static/images/face/Image42.gif">Image42
+											<option value="../static/images/face/Image43.gif">Image43
+											<option value="../static/images/face/Image44.gif">Image44
+											<option value="../static/images/face/Image45.gif">Image45
+											<option value="../static/images/face/Image46.gif">Image46
+											<option value="../static/images/face/Image47.gif">Image47
+											<option value="../static/images/face/Image48.gif">Image48
+											<option value="../static/images/face/Image49.gif">Image49
+											<option value="../static/images/face/Image50.gif">Image50
+											<option value="../static/images/face/Image51.gif">Image51
+											<option value="../static/images/face/Image52.gif">Image52
+											<option value="../static/images/face/Image53.gif">Image53
+											<option value="../static/images/face/Image54.gif">Image54
+											<option value="../static/images/face/Image55.gif">Image55
+											<option value="../static/images/face/Image56.gif">Image56
+											<option value="../static/images/face/Image57.gif">Image57
+											<option value="../static/images/face/Image58.gif">Image58
+											<option value="../static/images/face/Image59.gif">Image59
+											<option value="../static/images/face/Image60.gif">Image60
+										</select> &nbsp;&nbsp;<img id=avatar src="../static/images/face/Image1.gif" alt=个人头像
 											width="32" height="32"></td>
 									</tr>
 

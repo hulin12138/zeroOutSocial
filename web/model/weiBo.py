@@ -26,7 +26,7 @@ class Weibo():
             ["weibo_topic", '"'+weibo_topic+'"']
         ]
 
-        yzs = [ [weibo_x, "<file:///D:/d2rq-0.8.1/vocab/"+i+">",j+" ." ] for i,j in yzs ]
+        yzs = [ [weibo_x, "<http://localhost:2020/vocab/"+i+">",j+" ." ] for i,j in yzs ]
         yzs = [" ".join(i) for i in yzs]
         yzs = "\n".join(yzs)
         sparql_insert_weibo = "INSERT DATA { " + yzs + " }"
@@ -47,7 +47,7 @@ class Weibo():
             return HttpResponse('{"status":"error"}')
         if "uid" in request.session:
             user_uid = request.session.get("uid")
-            sparql_check_user = 'select ?y where {{ <file:///D:/d2rq-0.8.1/weibo.nt#weibo/{}> <file:///D:/d2rq-0.8.1/vocab/weibo_uid> ?y. }}'.format(weibo_mid)
+            sparql_check_user = 'select ?y where {{ <http://localhost:2020/weibo/{}> <http://localhost:2020/vocab/weibo_uid> ?y. }}'.format(weibo_mid)
             res = self.gstore.query("weibo", sparql_check_user)
             res = res["results"]["bindings"][0]["y"]["value"]
             if not res==user_uid:
@@ -56,7 +56,7 @@ class Weibo():
             return HttpResponse('{"status":"notlogin"}')
 
         #print("===================================")
-        sparql = "delete {{ <file:///D:/d2rq-0.8.1/weibo.nt#weibo/{}> ?y ?z }} where {{  <file:///D:/d2rq-0.8.1/weibo.nt#weibo/{}> ?y ?z. }}".format(weibo_mid, weibo_mid)
+        sparql = "delete {{ <http://localhost:2020/weibo/{}> ?y ?z }} where {{  <http://localhost:2020/weibo/{}> ?y ?z. }}".format(weibo_mid, weibo_mid)
         #sparql_check = "select ?y ?z where {{  <file:///D:/d2rq-0.8.1/weibo.nt#weibo/{}> ?y ?z. }}".format(weibo_mid)
         #print(sparql)
         res = self.gstore.query("weibo", sparql)
@@ -68,7 +68,7 @@ class Weibo():
 
 
     def get_user_name(self, user_id):
-        query_str = 'select ?z where {{ <file:///D:/d2rq-0.8.1/weibo.nt#user/{}>  <file:///D:/d2rq-0.8.1/vocab/user_screen_name> ?z .}}'.format(user_id)
+        query_str = 'select ?z where {{ <http://localhost:2020/user/{}>  <http://localhost:2020/vocab/user_screen_name> ?z .}}'.format(user_id)
         res = self.gstore.query("weibo", query_str)
         #res = json.loads(res)
         if len(res["results"]["bindings"])==0:
@@ -81,7 +81,7 @@ class Weibo():
         #user_name = self.get_user_name(weibo_uid)
         #if self.time_debug: print("Get user name:", time.time()-time_start)
         
-        query_str = 'select ?x ?y ?z where {{ ?x <file:///D:/d2rq-0.8.1/vocab/weibo_uid> "{}" . ?x ?y ?z . }}'.format(weibo_uid)
+        query_str = 'select ?x ?y ?z where {{ ?x <http://localhost:2020/vocab/weibo_uid> "{}" . ?x ?y ?z . }}'.format(weibo_uid)
         if self.time_debug: time_start = time.time()
         res = self.gstore.query("weibo", query_str)
         if self.time_debug: print("User query:", time.time()-time_start)
@@ -100,7 +100,7 @@ class Weibo():
             weibo_per = dict()
             #weibo_per["weibo_uid_name"] = user_name
             for weibo_y, weibo_z in weibo_cons:
-                if weibo_y.startswith("file:///D:/d2rq-0.8.1/vocab"):
+                if weibo_y.startswith("fhttp://localhost:2020/vocab"):
                     weibo_y = weibo_y[28:]
                     weibo_per[weibo_y] = weibo_z
             weibo_all.append(weibo_per)
@@ -108,7 +108,7 @@ class Weibo():
         return weibo_all
         
         # the following is discard version
-        query_str = 'select ?x where {{ ?x <file:///D:/d2rq-0.8.1/vocab/weibo_uid> "{}" . }}'.format(weibo_uid)
+        query_str = 'select ?x where {{ ?x <http://localhost:2020/vocab/weibo_uid> "{}" . }}'.format(weibo_uid)
         res = self.gstore.query("weibo", query_str)
         weibo_mids = [i["x"]["value"] for i in res["results"]["bindings"]]
         weibo_all = []
@@ -120,7 +120,7 @@ class Weibo():
             for res_per in res:
                 y = res_per["y"]["value"]
                 z = res_per["z"]["value"]
-                if y.startswith("file:///D:/d2rq-0.8.1/vocab"):
+                if y.startswith("http://localhost:2020/vocab"):
                     y = y[28:]
                     weibo_per[y] = z
             weibo_all.append(weibo_per)
@@ -129,7 +129,7 @@ class Weibo():
 
     def send_weibo(self, request):
         if "uid"  not in request.session:
-            response = HttpResponseRedirect(reverse('myapp:index'))
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
             return response
         #print("Gookie got", request.session.get("user"))
         user_id = request.session.get("uid")
@@ -170,7 +170,7 @@ class Weibo():
         return HttpResponse(user_weibos)
 
     def get_my_follow_user(self, user_id):
-        query_str = 'select ?x where {{ ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> "{}" }} .'.format(user_id)
+        query_str = 'select ?x where {{ ?x <http://localhost:2020/vocab/userrelation_suid> "{}" }} .'.format(user_id)
         #print(query_str)
         res = self.gstore.query("weibo", query_str)
         #print("--------------------------",res)
@@ -248,11 +248,11 @@ class Weibo():
 
     def get_user_follow_weibo(self, user_id):
         sql = """select ?user ?user_name ?weibo ?weibo_relation ?weibo_z where {{
-            ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_suid> "{}".
-            ?x <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> ?user.
-            ?user_rep <file:///D:/d2rq-0.8.1/vocab/user_uid> ?user.
-            ?user_rep <file:///D:/d2rq-0.8.1/vocab/user_screen_name> ?user_name.
-            ?weibo <file:///D:/d2rq-0.8.1/vocab/weibo_uid> ?user.
+            ?x <http://localhost:2020/vocab/userrelation_suid> "{}".
+            ?x <http://localhost:2020/vocab/userrelation_tuid> ?user.
+            ?user_rep <http://localhost:2020/vocab/user_uid> ?user.
+            ?user_rep <http://localhost:2020/vocab/user_screen_name> ?user_name.
+            ?weibo <http://localhost:2020/vocab/weibo_uid> ?user.
             ?weibo ?weibo_relation ?weibo_z.
         }}
         """.format(user_id)

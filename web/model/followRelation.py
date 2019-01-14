@@ -24,8 +24,12 @@ class User():
 
     def get_user_name(self, user_id):
         query_str = "select ?x where{ <" + userPrefix + user_id + "> <" + predicatePrefix + "user_screen_name> ?x.}"
+        print('*' * 60)
+        print(query_str)
+        print('*' * 60)
         res = self.gstore.query("weibo", query_str)
         res = res["results"]["bindings"][0]["x"]["value"]
+        print(res)
         return res
 
     def get_location(self, user_id):

@@ -196,12 +196,12 @@ def change_passwd(request):
 def random_choose_user(request):
     query = prefix + ' select ?x ?uname where { ?x wb:user_screen_name ?uname .}'
     res = gstore.query('weibo', query)['results']['bindings']
-    pairs = [[i['x']['value'][-10:-1],i['uname']['value']] for i in res]
+    pairs = [[i['x']['value'][-10:],i['uname']['value']] for i in res]
     random.shuffle(pairs)
     pairs = pairs[0:10]
     users = []
     for i in range(len(pairs)):
-        user = account_user('uid'=pairs[i][0],'name'=pair[i][0])
+        user = account_user(uid=pairs[i][0],name=pairs[i][1])
         users.append(user)
     context = {'users':users}
     return render(request,'explore.html',context)
@@ -213,7 +213,11 @@ def follow_in_explore(request):
     user_id = request.session.get("uid")
     uid = request.POST['uid']
     st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+    predicatePrefix = "http://localhost:2020/vocab/"
     query_str = "insert data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_tuid> \"" + uid + "\".}"
+    print('*' * 60)
+    print(query_str)
+    print('*' * 60)
     res = gstore.query("weibo", query_str)
     return redirect(reverse('zeroOut:explore'))
 

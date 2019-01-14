@@ -56,18 +56,6 @@ function change(input)
 				</ul>
 			</div>
 		</div>
-		
-					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />		
-					<%
-						String name = (String)session.getAttribute("loginname");
-						pR = pR.getPersonRepository();
-						socnet.Person person = pR.getPersonByName(name);
-						java.util.Iterator<socnet.Person> it = person.getFriends().iterator();
-						java.util.Iterator<socnet.Person> offer = 
-							/*pR.getAllPersons().iterator();*/
-							person.getFriendRecommendation(socnet.Person.SHOW_NUM).iterator();
-					%>
-					
 		<div class="body">
 			<div>
 				<div>
@@ -78,59 +66,20 @@ function change(input)
 				<tr>
 					<td>
 					<p>&nbsp;&nbsp;我的关注：</p>
-					<%
-					while (it.hasNext())
-					{
-						socnet.Person aPerson = it.next();
-						String fname = aPerson.getName();
-						
-						String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
-
-						%>
-						
-						<form name="removeFriendForm<%=fname %>" action="RemoveFriendServlet" method="post">
-						<p>
-						<input type="hidden" name="theFriend" value="<%=fname %>"/> 
-						<%
-						out.println(ahref);
-						%>
-						&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="removeFollow" value="取消关注"/>
-						</p>
+					{%if follower_users%}
+					<table id="block" style="margin-top:25px">
+					{%for follow in follower_users%}
+					<tr>
+						<th><a href="{%url 'my:app:get_user_home' follow.uid%}">{{follow}}</a></th>
+						<th>{{ follow.name }}</th>
+							<form name="removeFollowForm<%=fname %>" action = "{%url 'zeroOut:delete_follow_user'}" method="post">
+								<p>
+								<input type="hidden" name="followuid" value={{follow.uid}}>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" name=removeFollowUser" value="移除关注"/>
+							</p>
 						</form>
-						<%
-					}
-					%>
-					</td>
-					<td>
-					<p>&nbsp;&nbsp;推荐好友：</p>
-					<%
-					if (!offer.hasNext())
-					{
-						offer = pR.getAllPersons().iterator();
-					}
-					int show_num = 0;
-					while (offer.hasNext() && show_num < socnet.Person.SHOW_NUM)
-					{
-						socnet.Person aPerson = offer.next();
-						String fname = aPerson.getName();
-						
-						String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
-						%>
-						
-						<form name="addFriendForm<%=fname %>" action="AddFriendServlet" method="post">
-						<p>
-						<input type="hidden" name="theFriend" value="<%=fname %>"/> 
-						<%
-						out.println(ahref);
-						%>
-						&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="addFollow" value="加关注"/>
-						</p>
-						</form>
-						<%
-						show_num ++;
-					}
-					%>
-					
+					</tr>
 					</td>
 					</tr>
 					</table>

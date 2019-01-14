@@ -133,7 +133,7 @@ class Weibo():
             return response
         #print("Gookie got", request.session.get("user"))
         user_id = request.session.get("uid")
-        weibo_text = request.POST["weibo_text"]
+        weibo_text = request.POST["my_news"]
         weibo_topic = "F**k this project"
         weibo_uid = user_id
         weibo_mid = str(time.time())

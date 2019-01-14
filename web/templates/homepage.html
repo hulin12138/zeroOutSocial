@@ -40,27 +40,6 @@
 				<div>
 					<ul class="blog">	
 						<table width="100%" border="0">
-						
-					<html:useBean id="pR" class="socnet.PersonRepository" scope="page" />
-					<%
-						String name = (String)request.getParameter("hpName");
-						if (name == null)
-						{
-							name = (String)session.getAttribute("loginname");
-						}
-						else
-							name = new String(name.getBytes("ISO8859-1"), "utf-8");
-						
-						pR = pR.getPersonRepository();
-						socnet.Person person = pR.getPersonByName(name);
-						String sex = person.getGender();
-						String hometown = person.getHometown();
-						String birthday = person.getBirthday();
-						String food = person.getFavoriteFood();
-						String act = person.getFavoriteAct();
-						String movie = person.getFavoriteMovie();		
-						String pic = person.getAvatar();
-					%>
 							<tr>
 								<td>
 								<table width="100%" border="0">
@@ -105,21 +84,7 @@
 										
 										<td>
 												
-					<%
-						java.util.Iterator<socnet.Person> af = person.getFriends().iterator();
-					%>
 					<p>&nbsp;&nbsp;关注：</p>
-					<%
-					while (af.hasNext())
-					{
-						socnet.Person aPerson = af.next();
-						String fname = aPerson.getName();
-						
-						String ahref = "<a href=\"homepage.html?hpName="+fname+"\">"+fname+"</a>";
-
-						out.println("<p>"+ahref+"</p>");
-					}
-					%>
 										</td>
 									</tr>
 								</table>

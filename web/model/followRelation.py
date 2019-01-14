@@ -59,36 +59,13 @@ class User():
         res = res["results"]["bindings"]
         return len(res)
 
-    def get_my_home(self, request):
-        if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
-            return response
-        user_id = request.session.get("uid")
-        name = self.get_user_name(user_id)
-        weibo_num = self.get_weibo_num(user_id)	
-        follow_num = self.get_follow_num(user_id)	
-        fan_num = self.get_fan_num(user_id)	
-        context = {'uid': user_id, 'name': name, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}
-        return render(request, 'user/my.html', context)#TODO
-	
-    def get_user_home(self, request, uid):
-        if "uid" not in request.session:
-            response = HttpResponseRedirect(reverse('zeroOut:index'))
-            return response
-        user_id = request.session.get("uid")
-        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
-        query_str = "select * where{ " + st + " <" + predicatePrefix +  "userrelation_suid> \"" + user_id + "\".}"
-        res = self.gstore.query("weibo", query_str)
-        res = res["results"]["bindings"]
+    def get_user_home(self, request,uid):
         name = self.get_user_name(uid)
-        location = self.get_location(uid)
-        gender = self.get_gender(uid)		
         weibo_num = self.get_weibo_num(uid)	
         follow_num = self.get_follow_num(uid)	
         fan_num = self.get_fan_num(uid)	
-        flag = len(res)
-        context = {'uid': uid, 'name': name, 'location': location, 'gender': gender, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'flag': flag}
-        return render(request, 'user.html', context)#TODO	
+        context = {'uid': user_id, 'name': name, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}
+        return render(request, 'my.html', context)#TODO
 		
     def get_my_follow_user(self, request):
         if "uid" not in request.session:

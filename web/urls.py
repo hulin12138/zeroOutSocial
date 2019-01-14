@@ -34,9 +34,10 @@ urlpatterns = [
     path('delete_follow_user',views.delete_follow_user, name='delete_follow_user'),
     path('get_my_fan',views.get_my_fan, name='get_my_fan'),
     path('delete_fan',views.delete_fan, name='delete_fan'),
+
     path('send_weibo', views.send_weibo, name="send_weibo"),
     path('delete_weibo', views.delete_weibo, name="delete_weibo"),
     path('get_my_weibo', views.get_my_weibo, name="get_my_weibo"),
     path('get_my_follow_weibo', views.get_my_follow_weibo, name="get_my_follow_weibo"),
-    path('get_user_home', views.get_user_home, name="get_user_home")
+    #path('get_user_home', control.get_user_home, name="get_user_home")
 ]

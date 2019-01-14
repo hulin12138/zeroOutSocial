@@ -138,7 +138,6 @@ def edit_profile(request):
 def update_profile(request):
     uid = request.POST['uid']
     nickName = request.POST['nickName']
-    password = request.POST['password']
     sex = request.POST['sex']
     city = request.POST['city']
     query = '''{} 
@@ -147,13 +146,6 @@ def update_profile(request):
                 where {{ ?user wb:user_uid "{}" .
                         ?user wb:user_screen_name ?s}} 
                 '''.format(prefix, nickName, uid)
-    gstore.query('weibo', query)
-    query = '''{} 
-                    delete {{ ?user wb:user_password ?s }}
-                    insert {{ ?user wb:user_password "{}" }}
-                    where {{ ?user wb:user_uid "{}" .
-                            ?user wb:user_password ?s}} 
-                    '''.format(prefix, password, uid)
     gstore.query('weibo', query)
     query = '''{} 
             delete {{ ?user wb:user_gender ?g }}
@@ -185,9 +177,12 @@ def change_passwd(request):
         if origin_passwd != password_from_db:
             return HttpResponseNotFound('original passsword incorrect!')
         else:
-            user_entity = '<http://localhost:2020/user/{}>'.format(uid)
-            query = '{} insert data {{ {} wb:{} "{}" .}}'.format(
-                prefix, user_entity, 'user_password', new_passwd)
+            query = '''{} 
+                    delete {{ ?user wb:user_password ?s }}
+                    insert {{ ?user wb:user_password "{}" }}
+                    where {{ ?user wb:user_uid "{}" .
+                            ?user wb:user_password ?s}} 
+                    '''.format(prefix, new_password, uid)
             gstore.query('weibo', query)
             redirect(reverse('zeroOut:get_home'))
     else:
@@ -196,7 +191,12 @@ def change_passwd(request):
             prefix, user_entity, 'user_password', new_passwd)
         gstore.query('weibo', query)
         redirect(reverse('zeroOut:get_home'))
-
+'''
+def random_choose_user(request):
+    query = prefix + ' select ?uid ?uname where { ?x wb:user_screen_name ?uname . ?x wb:user_uid ?uid .}'
+    res = gstore.query('weibo', query)['results']['bindings']
+    pair = [   ]
+'''
 def send_weibo(request):
     if "uid"  not in request.session:
         response = HttpResponseRedirect(reverse('myapp:index'))#TODO

@@ -242,6 +242,8 @@ class Weibo():
         if self.time_debug: print("End   get_my_follow_weibo", time.asctime( time.localtime(time.time()) ))
         return HttpResponse(weibo_all)
 
+    
+
     #write_weibo("123344", "2014-04-30T15:53:35", "hhh", "UNK", "0", "0", "0", "123456", "hh")
     #get_user_weibo("123456")
     #get_user_weibo("1749705962")

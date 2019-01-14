@@ -6,6 +6,7 @@ from hashlib import sha256
 from datetime import datetime
 from model.followRelation import User as follow_user#TODO
 from model.userAccount import userAccount as account_user
+from model.weiBo import Weibo
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "
 gstore = GstoreConnector("localhost", 9000, 'root', '123456')
@@ -96,7 +97,10 @@ def get_home(request):
     weibo_num = f_user.get_weibo_num(uid)
     follow_num = f_user.get_follow_num(uid)
     fan_num = f_user.get_fan_num(uid)
-    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
+
+    weibo = Weibo(gstore)
+    weibos = weibo.get_user_follow_weibo(uid)
+    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num, 'weibos': weibos}#TODO
     return render(request, 'usermain.html', context)
 
 def edit_profile(request):
@@ -144,3 +148,5 @@ def update_profile(request):
     print(response)
     request.session['uid'] = uid
     return redirect(reverse('web:profile'))#TODO
+
+

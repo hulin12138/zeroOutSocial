@@ -47,4 +47,5 @@ def get_my_weibo(request):
 
 def get_my_follow_weibo(request):
     return weibo.get_my_follow_weibo(request)
+
 	

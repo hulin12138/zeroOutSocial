@@ -38,31 +38,31 @@
 <div class="page">
 		<div class="header">
 			<div>
-				<a href="login.html" id="logo"><img src="../static/images/logo.gif" alt="logo"></a>
+				<a href="/zeroOut/" id="logo"><img src="../static/images/logo.gif" alt="logo"></a>
 				<ul>
 					<li>
-						<a href="usermain.html">首页</a>
+						<a href="/zeroOut/get_home">首页</a>
 					</li>
 					<li>
-						<a href="homepage.html">个人主页</a>
+						<a href="/zeroOut/get_my_user_home">个人主页</a>
 					</li>
 					<li>
-						<a href="follow.html">关注</a>
+						<a href="/zeroOut/get_my_follow_user">关注</a>
 					</li>
 					<li>
-						<a href="fans.html">粉丝</a>
+						<a href="/zeroOut/get_my_fan">粉丝</a>
 					</li>
 					<li>
 						<a href="update.html">个人资料</a>
 					</li>
 					<li class="selected">
-						<a href="changePwd.html">我的帐号</a>
+						<a href="/zeroOut/enter_change_passwd">我的帐号</a>
 					</li>
 					<li>
 						<a href="random.html">随便看看</a>
 					</li>
 					<li>
-						<a href="logout.html">登出</a>
+						<a href="/zeroOut/">登出</a>
 					</li>
 				</ul>
 			</div>
@@ -71,7 +71,7 @@
 			<div>
 				<div>
 					<ul class="blog">		
-						<form action="ChangePwdServlet" method="post" onSubmit="return check_info(this);">
+						<form action="{% url 'zeroOut:change_passwd' %}" method="post" onSubmit="return check_info(this);">
 						<center>
 						<table width="520" border="0" bordercolor="#99CCFF" cellpadding="0"
 							cellspacing="0" style="border-collapse: collapse">
@@ -79,38 +79,16 @@
 							<tr>
 								<td height="40" colspan="2" align="center"><h3>修改帐号密码</h3></td>
 							</tr>
-							
-							<tr>
-		<%
-		try {
-			String errorcode = (String)session.getAttribute("errorcode");
-			if (errorcode != null)
-			{
-				if (errorcode.equals("FailChangePwd"))
-				{
-		%>
-		<font color="red">密码错误！</font> 
-		<%
-				}
-			}
-		}
-		catch (Exception e) 
-		{
- 		System.err.println(e.getMessage());
- 		}
-		%>
-		
-							</tr>
 							<tr height="40"></tr>
 							<tr>
 								<td width="24%" height="40" align="right">当前密码：&nbsp;<font color="red">*</font></td>
 								<td width="76%" height="40" align="left">&nbsp;&nbsp;&nbsp;<input
-									type="password" name="old_pwd" /> （数字或者是字符[<font color="red">3-30</font>]）
+									type="password" name="origin_passwd" /> （数字或者是字符[<font color="red">3-30</font>]）
 							</tr>
 							<tr>
 								<td height="40" align="right">新的密码：&nbsp;<font color="red">*</font></td>
 								<td height="40" align="left">&nbsp;&nbsp;&nbsp;<input
-									type="password" name="new_pwd" /> </td>
+									type="password" name="new_passwd" /> </td>
 							</tr>
 							<tr>
 								<td height="40" colspan="2" align="center"><input type="submit"
@@ -128,10 +106,10 @@
 			<div>
 				<ul>
 					<li>
-						<a href="login.html">登录</a>
+						<a href="/zeroOut/">登录</a>
 					</li>
 					<li>
-						<a href="register.html">注册</a>
+						<a href="/zeroOut/register">注册</a>
 					</li>
 					<li>
 						<a href="/zeroOut/about">关于</a>

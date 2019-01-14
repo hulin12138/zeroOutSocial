@@ -174,7 +174,7 @@ def update_profile(request):
     return redirect(reverse('zeroOut:display_profile'))#TODO
 
 def change_passwd(request):
-    uid = request.POST['uid']
+    uid = request.session['uid']
     origin_passwd = request.POST['origin_passwd']
     new_passwd = request.POST['new_passwd']
     template = prefix + ' select ?m where {{ ?x wb:{} ?m . ?x wb:user_uid "{}" .}}'
@@ -189,13 +189,13 @@ def change_passwd(request):
             query = '{} insert data {{ {} wb:{} "{}" .}}'.format(
                 prefix, user_entity, 'user_password', new_passwd)
             gstore.query('weibo', query)
-            redirect(reverse('zeroOut:get_home'))
+            return redirect(reverse('zeroOut:get_home'))
     else:
         user_entity = '<http://localhost:2020/user/{}>'.format(uid)
         query = '{} insert data {{ {} wb:{} "{}" .}}'.format(
             prefix, user_entity, 'user_password', new_passwd)
         gstore.query('weibo', query)
-        redirect(reverse('zeroOut:get_home'))
+        returnreturn  redirect(reverse('zeroOut:get_home'))
 
 def send_weibo(request):
     if "uid"  not in request.session:

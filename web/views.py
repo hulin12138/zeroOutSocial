@@ -32,7 +32,8 @@ def delete_follow_user(request):
 def get_my_fan(request):
     return user.get_my_fan(request)
 
-def delete_fan(request, uid):
+def delete_fan(request):
+    uid = request.POST['fanuid']
     return user.delete_fan(request,uid)
 
 def send_weibo(request):

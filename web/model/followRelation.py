@@ -108,7 +108,6 @@ class User():
             response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        print(user_id)
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
         query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
@@ -148,10 +147,10 @@ class User():
             response = HttpResponseRedirect(reverse('zeroOut:index'))#TODO
             return response
         user_id = request.session.get("uid")
-        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+        st = "<http://localhost:2020/userrelation/" + uid + "/" + user_id + ">"
         query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_tuid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_suid> \"" + uid + "\".}"
-        res = self.gStore.query("weibo",query_str)
-        return self.get_my_fan(self, request)
+        res = self.gstore.query("weibo",query_str)
+        return self.get_my_fan(request)
 
     def get_fan(self, request, uid):
         if "uid" not in request.session:

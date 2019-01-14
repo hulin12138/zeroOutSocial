@@ -72,20 +72,6 @@ def check_register(request):
     request.session['uid'] = uid
     return redirect(reverse('zeroOut:profile'))#TODO
 
-def profile(request):
-    uid = request.session['uid']
-    print(uid, request.session)
-
-    user = account_user(uid)
-    user.load_from_db()
-
-    f_user = follow_user(gstore)
-    weibo_num = f_user.get_weibo_num(uid)
-    follow_num = f_user.get_follow_num(uid)
-    fan_num = f_user.get_fan_num(uid)
-    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
-    return render(request, 'web/profile.html', context)#TODO
-
 def get_home(request):#go to page after login
     uid = request.session['uid']
     print(uid, request.session)
@@ -127,13 +113,27 @@ def get_other_user_home(requet):
     context = self.get_user_home(uid)
     return render(request, 'homepage.html', context)
 
+def profile(request):
+    uid = request.session['uid']
+    print(uid, request.session)
+
+    user = account_user(uid)
+    user.load_from_db()
+
+    f_user = follow_user(gstore)
+    weibo_num = f_user.get_weibo_num(uid)
+    follow_num = f_user.get_follow_num(uid)
+    fan_num = f_user.get_fan_num(uid)
+    context = {'user': user, 'weibo_num': weibo_num, 'follow_num': follow_num, 'fan_num': fan_num}#TODO
+    return render(request, 'web/profile.html', context)#TODO
+
+
 def edit_profile(request):
     uid = request.session['uid']
     user = account_user(uid)
     user.load_from_db()
     context = {'user': user}
-    return render(request, 'web/edit_profile.html', context)#TODO
-
+    return render(request, 'update.html', context)#TODO
 
 def update_profile(request):
     uid = request.POST['uid']
@@ -171,7 +171,7 @@ def update_profile(request):
     response = gstore.query('weibo', query)
     print(response)
     request.session['uid'] = uid
-    return redirect(reverse('web:profile'))#TODO
+    return redirect(reverse('zeroOut:display_profile'))#TODO
 
 def send_weibo(request):
     if "uid"  not in request.session:

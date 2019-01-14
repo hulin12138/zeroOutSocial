@@ -132,7 +132,7 @@ class User():
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
-        query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
+        query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
         return self.get_my_follow_user(request)
 		
@@ -142,7 +142,7 @@ class User():
             return response
         user_id = request.session.get("uid")
         st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
-        query_str = "insert data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <file:///D:/d2rq-0.8.1/vocab/userrelation_tuid> \"" + uid + "\".}"
+        query_str = "insert data{ " + st + " <" + predicatePrefix + "userrelation_suid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_tuid> \"" + uid + "\".}"
         res = self.gstore.query("weibo", query_str)
         return self.get_user_home(request, uid)#TODO
 		
@@ -164,7 +164,17 @@ class User():
             users.append(user)
         context = {'fans': users}
         return render(request, 'user/my_fan.html', context)#
-		
+
+    def delete_fan(self, request, uid):
+		if "uid" not in request.session:
+            response = HttpResponseRedirect(reverse('myapp:index'))#TODO
+            return response
+        user_id = request.session.get("uid")
+        st = "<http://localhost:2020/userrelation/" + user_id + "/" + uid + ">"
+        query_str = "delete data{ " + st + " <" + predicatePrefix + "userrelation_tuid> \"" + user_id + "\"." + st + " <" + predicatePrefix + "userrelation_suid> \"" + uid + "\".}"
+        res = self.gStore.query("weibo",query_str)
+        return self.get_my_fan(self, request)
+
     def get_fan(self, request, uid):
         if "uid" not in request.session:
             response = HttpResponseRedirect(reverse('myapp:index'))#TODO

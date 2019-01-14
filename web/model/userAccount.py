@@ -8,8 +8,8 @@ from GstoreConnector import GstoreConnector
 #from datetime import datetime
 #from .followRelation import User as follow_user
 
-# gstore = GstoreConnector("localhost", 9000, "root", "123456")
-gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")
+gstore = GstoreConnector("localhost", 9000, "root", "123456")
+#gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")
 
 class userAccount:
     def __init__ (self,uid,name='',nickName='',sex='',city='',creaDate='',password=''):

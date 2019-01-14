@@ -8,7 +8,7 @@ from model.followRelation import User as follow_user#TODO
 from model.userAccount import userAccount as account_user
 
 prefix = "prefix wb: <http://localhost:2020/vocab/> "
-gstore = GstoreConnector("162.105.88.93", 9000, "root", "123456")
+gstore = GstoreConnector("localhost", 9000, 'root', '123456')
 
 def login(request):
     try:

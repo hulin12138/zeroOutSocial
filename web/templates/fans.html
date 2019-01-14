@@ -61,17 +61,28 @@ function change(input)
                     <tr>
                     <th> Name </th>
                     <th> Delete </th>
+                    <th> HomePage </th>
                     </tr>
                     {% for fan in fans %}
                     <tr>
-                    <td>{{ fan.name }}</td>
+                    <td>{{fan.name}}</td>
                     <td>
-						<form name="removeFansForm<%=fname %>" action="{% url 'zeroOut:delete_fan' %}" method="post">
+						<form name="removeFansForm" action="{% url 'zeroOut:delete_fan' %}" method="post">
                         {% csrf_token %}
 						<p>
 						<input type="hidden" name="fanuid" value={{fan.uid}}> 
 						&nbsp;&nbsp;&nbsp;&nbsp;
                         <input type="submit" name="removeFans" value="移除粉丝"/>
+						</p>
+						</form>
+                    </td>
+                    <td>
+						<form name="FansHomepageForm" action="{% url 'zeroOut:get_other_user_home' %}" method="post">
+                        {% csrf_token %}
+						<p>
+						<input type="hidden" name="uid" value={{fan.uid}}> 
+						&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="homepage" value="ta的主页"/>
 						</p>
 						</form>
                     </td>

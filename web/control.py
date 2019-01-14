@@ -122,7 +122,7 @@ def get_my_user_home(request):
     context = get_user_home(uid)
     return render(request, 'homepage.html', context)
 
-def get_other_user_home(requet):
+def get_other_user_home(request):
     uid = request.POST['uid']
     context = get_user_home(uid)
     return render(request, 'homepage.html', context)

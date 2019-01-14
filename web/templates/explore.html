@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<title>我的关注</title>
+	<title>随便看看</title>
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
 <script>
 <!--
@@ -56,19 +56,19 @@ function change(input)
 				<table width="80%" border="0">
 				<tr>
 					<td>
-					<p>&nbsp;&nbsp;我的关注：</p>
+					<p>&nbsp;&nbsp;你可能感兴趣：</p>
 					{%if follow_users%}
 					<table id="block" style="margin-top:25px">
                     <tr>
                     <th> Name </th>
-                    <th> Delete </th>
+                    <th> Follow </th>
                     <th> Homepage </th>
                     </tr>
 					{%for follow in follow_users%}
 					    <tr>
 						<td>{{ follow.name }}</td>
                         <td>
-							<form name="removeFollowForm" action = "{% url 'zeroOut:delete_follow_user' %}" method="post">
+							<form name="FollowForm" action = "{% url 'zeroOut:delete_follow_user' %}" method="post">
                             {% csrf_token %}
 							<p>
 								<input type="hidden" name="followuid" value={{follow.uid}}>

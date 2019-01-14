@@ -196,10 +196,14 @@ def change_passwd(request):
 def random_choose_user(request):
     query = prefix + ' select ?x ?uname where { ?x wb:user_screen_name ?uname .}'
     res = gstore.query('weibo', query)['results']['bindings']
-    pairs = [{'uid':i['x']['value'][-10:-1],'uname':i['uname']['value']} for i in res]
+    pairs = [[i['x']['value'][-10:-1],i['uname']['value']] for i in res]
     random.shuffle(pairs)
     pairs = pairs[0:10]
-    context = {'pairs':pairs}
+    users = []
+    for i in range(len(pairs)):
+        user = account_user('uid'=pairs[i][0],'name'=pair[i][0])
+        users.append(user)
+    context = {'users':users}
     return render(request,'explore.html',context)
 
 def follow_in_explore(request):

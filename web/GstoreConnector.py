@@ -41,7 +41,7 @@ class GstoreConnector:
 
     def Get(self, strUrl):
         r = requests.get(self.UrlEncode(strUrl))
-        return r.text
+        return r.json()
 
     def fGet(self, strUrl, filename):
         r = requests.get(self.UrlEncode(strUrl), stream=True)

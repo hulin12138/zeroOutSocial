@@ -22,10 +22,10 @@ import control
 
 app_name = 'zeroOut'
 urlpatterns = [
-    path('', index, name='index'),
-    path('login', login, name='login'),
-    path('register', register, name='register'),
-    path('login.html', index, name='index'),
-    path('register.html', register, name='register'),
+    path('', views.index, name='index'),
+    path('login', control.login, name='login'),
+    path('register', views.register, name='register'),
+    path('login.html', views.index, name='index'),
+    path('register.html', views.register, name='register'),
 
 ]

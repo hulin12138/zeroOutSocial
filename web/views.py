@@ -46,4 +46,5 @@ def get_my_weibo(request):
 def get_my_follow_weibo(request):
     return weibo.get_my_follow_weibo(request)
 
-	
+def enter_change_passwd(request):
+	return render(request, 'changePwd.html')

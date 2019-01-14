@@ -173,6 +173,30 @@ def update_profile(request):
     request.session['uid'] = uid
     return redirect(reverse('zeroOut:display_profile'))#TODO
 
+def change_passwd(request):
+    uid = request.POST['uid']
+    origin_passwd = request.POST['origin_passwd']
+    new_passwd = request.POST['new_passwd']
+    template = prefix + ' select ?m where {{ ?x wb:{} ?m . ?x wb:user_uid "{}" .}}'
+    query = template.format('user_password', uid)
+    res = gstore.query('weibo', query)['results']['bindings']
+    if len(res) > 0:
+        password_from_db = res[0]['m']['value']
+        if origin_passwd != password_from_db:
+            return HttpResponseNotFound('original passsword incorrect!')
+        else:
+            user_entity = '<http://localhost:2020/user/{}>'.format(uid)
+            query = '{} insert data {{ {} wb:{} "{}" .}}'.format(
+                prefix, user_entity, 'user_password', new_passwd)
+            gstore.query('weibo', query)
+            redirect(reverse('zeroOut:get_home'))
+    else:
+        user_entity = '<http://localhost:2020/user/{}>'.format(uid)
+        query = '{} insert data {{ {} wb:{} "{}" .}}'.format(
+            prefix, user_entity, 'user_password', new_passwd)
+        gstore.query('weibo', query)
+        redirect(reverse('zeroOut:get_home'))
+
 def send_weibo(request):
     if "uid"  not in request.session:
         response = HttpResponseRedirect(reverse('myapp:index'))#TODO

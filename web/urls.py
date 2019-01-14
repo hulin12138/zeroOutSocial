@@ -39,5 +39,7 @@ urlpatterns = [
     path('get_my_user_home',control.get_my_user_home, name='get_my_user_home'),
     path('get_other_user_home',control.get_other_user_home, name='get_other_user_home'),
     path('display_profile',control.edit_profile, name='display_profile'),
-    path('update_profile',control.update_profile, name='update_profile')
+    path('update_profile',control.update_profile, name='update_profile'),
+    path('change_passwd',control.change_passwd, name='change_passwd'),
+    path('enter_change_passwd',view.enter_change_passwd, name='enter_change_passwd')
 ]

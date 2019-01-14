@@ -1,34 +1,27 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8"
-    pageEncoding="UTF-8" import="org.neo4j.*"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>个人主页</title>
 	<link rel="stylesheet" href="../static/css/style.css" type="text/css">
-	<!--[if IE 7]>
-			<link rel="stylesheet" href="css/ie7.css" type="text/css">
-		<![endif]-->
-		
 </head>
 <body>
 
 <div class="page">
 		<div class="header">
 			<div>
-				<a href="login.html" id="logo"><img src="../static/images/logo.gif" alt="logo"></a>
+				<a href="/zeroOut/" id="logo"><img src="../static/images/logo.gif" alt="logo"></a>
 				<ul>
 					<li>
-						<a href="usermain.html">首页</a>
+						<a href="/zeroOut/get_home">首页</a>
 					</li>
 					<li class="selected">
 						<a href="homepage.html">个人主页</a>
 					</li>
 					<li>
-						<a href="follow.html">关注</a>
+						<a href="/zeroOut/get_my_follow_user">关注</a>
 					</li>
 					<li >
-						<a href="fans.html">粉丝</a>
+						<a href="/zeroOut/get_my_fan">粉丝</a>
 					</li>
 					<li>
 						<a href="update.html">个人资料</a>
@@ -37,10 +30,7 @@
 						<a href="changePwd.html">我的帐号</a>
 					</li>
 					<li>
-						<a href="random.html">随便看看</a>
-					</li>
-					<li>
-						<a href="logout.html">登出</a>
+						<a href="/zeroOut/">登出</a>
 					</li>
 				</ul>
 			</div>
@@ -166,10 +156,10 @@
 			<div>
 				<ul>
 					<li>
-						<a href="login.html">登录</a>
+						<a href="/zeroOut/">登录</a>
 					</li>
 					<li>
-						<a href="register.html">注册</a>
+						<a href="/zeroOut/register">注册</a>
 					</li>
 					<li>
 						<a href="/zeroOut/about">关于</a>
